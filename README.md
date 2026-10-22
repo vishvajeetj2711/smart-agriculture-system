@@ -131,3 +131,4 @@ Academic Year: 2026–2027
 
 This project is licensed under the MIT License.
 # Smart-Agriculture-System
+# smart-agriculture-system
