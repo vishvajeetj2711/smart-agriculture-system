@@ -1,0 +1,541 @@
+{% extends "base.html" %}
+{% block title %}Weather Forecast — Smart Agriculture Gujarat{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ════════════════════════════════════════════════════════════
+   SEARCH CARD
+════════════════════════════════════════════════════════════ */
+.search-card {
+  border-radius: 20px !important;
+  background: #fff;
+  border: none;
+}
+.search-tab-btn {
+  border: 2px solid #e0e0e0;
+  background: #f8f9fa;
+  border-radius: 12px !important;
+  font-weight: 600; font-size: 0.88rem; color: #555;
+  transition: all .18s; padding: 8px 20px;
+}
+.search-tab-btn.active, .search-tab-btn:hover {
+  background: #1565c0; border-color: #1565c0; color: #fff;
+}
+.search-input-wrap { position: relative; }
+.search-input-wrap .form-control {
+  border-radius: 14px !important; border: 2px solid #e0e0e0;
+  font-size: 1rem; height: 52px; padding-left: 48px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.search-input-wrap .form-control:focus {
+  border-color: #1565c0; box-shadow: 0 0 0 3px rgba(21,101,192,.12);
+}
+.search-input-wrap .input-icon {
+  position: absolute; left: 16px; top: 50%;
+  transform: translateY(-50%); font-size: 1.1rem; color: #1565c0; z-index: 4;
+}
+.search-btn {
+  height: 52px; border-radius: 14px !important;
+  background: linear-gradient(135deg, #1565c0, #1976d2);
+  border: none; font-weight: 700; font-size: 1rem; transition: opacity .15s;
+}
+.search-btn:hover { opacity: .88; }
+.quick-city-btn {
+  background: #e8f0fe; border: 1.5px solid #c5d8f8; color: #1565c0;
+  border-radius: 20px; font-size: 0.78rem; font-weight: 500;
+  padding: 4px 14px; transition: all .15s; cursor: pointer;
+}
+.quick-city-btn:hover { background: #1565c0; border-color: #1565c0; color: #fff; }
+
+/* ════════════════════════════════════════════════════════════
+   HERO WEATHER CARD
+════════════════════════════════════════════════════════════ */
+.weather-hero {
+  background: linear-gradient(135deg, #0a2342 0%, #0d47a1 45%, #1976d2 100%);
+  border-radius: 24px !important; color: #fff; position: relative; overflow: hidden;
+}
+/* Decorative circles */
+.weather-hero::before {
+  content: ""; position: absolute; top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.weather-hero::after {
+  content: ""; position: absolute; bottom: -100px; left: 30%;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.hero-inner { position: relative; z-index: 2; padding: 28px 32px 0; }
+.hero-bottom { position: relative; z-index: 2;
+  background: rgba(0,0,0,.2); padding: 12px 32px;
+  border-radius: 0 0 24px 24px;
+  display: flex; gap: 28px; flex-wrap: wrap; align-items: center;
+}
+.hero-city-line { font-size: 1rem; font-weight: 600; opacity: .88; }
+.hero-temp-num  { font-size: 6rem; font-weight: 800; line-height: 1; letter-spacing: -3px; }
+.hero-desc      { font-size: 1.1rem; font-weight: 500; opacity: .85; }
+.hero-sub       { font-size: 0.82rem; opacity: .6; }
+.hilow-pill {
+  display: inline-flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,.12); border-radius: 30px;
+  padding: 6px 16px; font-size: 0.82rem; margin-top: 10px;
+}
+.hilow-pill .hot  { color: #ffab40; font-weight: 700; }
+.hilow-pill .cold { color: #90caf9; font-weight: 700; }
+
+/* Frosted stat pills */
+.stat-frosted {
+  background: rgba(255,255,255,.14);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.22); border-radius: 18px;
+  padding: 16px 10px; text-align: center; transition: background .15s;
+}
+.stat-frosted:hover { background: rgba(255,255,255,.22); }
+.stat-frosted .sf-emoji { font-size: 1.6rem; display: block; margin-bottom: 5px; }
+.stat-frosted .sf-val   { font-size: 1.1rem; font-weight: 700; display: block; }
+.stat-frosted .sf-lbl   { font-size: 0.65rem; opacity: .72; display: block;
+                            margin-top: 3px; letter-spacing: .4px; text-transform: uppercase; }
+/* Bottom strip items */
+.hero-bottom-item { font-size: 0.78rem; opacity: .75; display: flex; align-items: center; gap: 6px; }
+.hero-bottom-item i { opacity: .9; }
+
+/* ════════════════════════════════════════════════════════════
+   7-DAY FORECAST CARDS
+════════════════════════════════════════════════════════════ */
+.fc-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 12px; }
+@media (max-width: 1199px) { .fc-grid { grid-template-columns: repeat(4,1fr); } }
+@media (max-width: 767px)  { .fc-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 479px)  { .fc-grid { grid-template-columns: 1fr; } }
+
+.fc-card {
+  border-radius: 20px !important; border: 2px solid #e3efff !important;
+  background: #fff; overflow: hidden;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.fc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgba(21,101,192,.18) !important;
+  border-color: #1565c0 !important;
+}
+.fc-card.fc-today {
+  background: linear-gradient(165deg, #dbeafe 0%, #f0f7ff 100%);
+  border-color: #1565c0 !important;
+  box-shadow: 0 6px 22px rgba(21,101,192,.2) !important;
+}
+
+/* Top accent gradient bar */
+.fc-bar { height: 5px; }
+.fc-today .fc-bar { background: linear-gradient(90deg, #1565c0, #42a5f5, #1565c0); }
+.fc-card:not(.fc-today) .fc-bar { background: linear-gradient(90deg, #a5d6a7, #66bb6a); }
+
+/* Header row */
+.fc-head {
+  padding: 11px 14px 4px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  border-bottom: 1px solid rgba(0,0,0,.04);
+}
+.fc-day-name  { font-size: 0.7rem; font-weight: 800; color: #1565c0;
+                text-transform: uppercase; letter-spacing: .8px; }
+.fc-date-str  { font-size: 0.68rem; color: #888; margin-top: 1px; }
+.fc-today-tag { background: #1565c0; color: #fff; font-size: 0.56rem;
+                font-weight: 800; padding: 2px 7px; border-radius: 20px; letter-spacing: .5px; }
+
+/* Icon + desc */
+.fc-icon-area { text-align: center; padding: 8px 6px 2px; }
+.fc-icon-area img { width: 58px; height: 58px; }
+.fc-desc-txt {
+  font-size: 0.68rem; color: #555; text-align: center;
+  line-height: 1.3; min-height: 24px; padding: 0 10px 6px;
+}
+
+/* Temp row */
+.fc-temps {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; padding: 4px 0 8px;
+}
+.fc-tmax { font-size: 1.7rem; font-weight: 800; color: #e53935; line-height: 1; }
+.fc-sep  { width: 1px; height: 32px; background: #ddd; }
+.fc-tmin-wrap { text-align: center; }
+.fc-tmin { font-size: 0.95rem; font-weight: 700; color: #1565c0; }
+.fc-tmin-lbl { font-size: 0.55rem; color: #aaa; letter-spacing: .4px; }
+
+/* Rain bar */
+.fc-rain-wrap { padding: 0 12px 8px; }
+.fc-rain-hdr  { display: flex; justify-content: space-between;
+                font-size: 0.66rem; color: #666; margin-bottom: 4px; }
+.fc-rain-pct  { font-weight: 700; color: #1565c0; }
+.fc-rain-track { height: 5px; background: #dbeafe; border-radius: 3px; overflow: hidden; }
+.fc-rain-fill  { height: 100%; border-radius: 3px;
+                 background: linear-gradient(90deg, #60a5fa, #1d4ed8); transition: width .6s ease; }
+.fc-rain-mm    { font-size: 0.6rem; color: #2563eb; margin-top: 3px; }
+
+/* Detail 2×2 grid */
+.fc-details {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid #f0f5ff; margin: 0 8px 10px;
+}
+.fc-det {
+  display: flex; align-items: flex-start; gap: 5px;
+  font-size: 0.65rem; color: #555; padding: 6px 6px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.fc-det:nth-child(odd) { border-right: 1px solid #f5f5f5; }
+.fc-det i { font-size: 0.7rem; width: 13px; flex-shrink: 0; margin-top: 1px; }
+.fc-det span { line-height: 1.4; }
+.fc-det .det-val { font-weight: 600; display: block; }
+.fc-det .det-lbl { color: #aaa; font-size: 0.6rem; }
+
+/* ════════════════════════════════════════════════════════════
+   QUICK CITY PLACEHOLDER GRID
+════════════════════════════════════════════════════════════ */
+.qc-card {
+  border-radius: 16px !important; border: 2px solid #dbeafe !important;
+  background: #fff; cursor: pointer; transition: all .18s; text-align: center;
+}
+.qc-card:hover {
+  background: #1565c0 !important; border-color: #1565c0 !important;
+}
+.qc-card:hover .qc-name, .qc-card:hover .qc-pin { color: #fff !important; }
+.qc-name { font-weight: 700; font-size: 0.9rem; color: #1a3a6b; }
+.qc-pin  { font-size: 0.7rem; color: #888; }
+
+/* ════════════════════════════════════════════════════════════
+   SECTION HEADING
+════════════════════════════════════════════════════════════ */
+.wx-section-title {
+  font-size: 1rem; font-weight: 700; color: #1a3a6b;
+  border-left: 4px solid #1565c0; padding-left: 12px; margin-bottom: 0;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 py-3">
+
+  <!-- Page Header -->
+  <div class="page-header mb-4">
+    <h2 class="page-title">⛅ Weather Forecast</h2>
+    <p class="text-muted mb-0">Live Gujarat weather — search by city name or 6-digit PIN code</p>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       SEARCH CARD
+  ════════════════════════════════════════════════════════ -->
+  <div class="card search-card shadow-sm mb-4">
+    <div class="card-body p-4">
+
+      <!-- Tab switcher -->
+      <div class="d-flex gap-2 mb-4">
+        <button class="search-tab-btn {% if not pincode %}active{% endif %}"
+                onclick="switchTab('city',this)" type="button">
+          <i class="bi bi-building me-2"></i>Search by City
+        </button>
+        <button class="search-tab-btn {% if pincode %}active{% endif %}"
+                onclick="switchTab('pin',this)" type="button">
+          <i class="bi bi-pin-map-fill me-2"></i>Search by PIN Code
+        </button>
+      </div>
+
+      <!-- City form -->
+      <form method="POST" action="{{ url_for('weather') }}" id="cityForm"
+            {% if pincode %}style="display:none"{% endif %}>
+        <input type="hidden" name="pincode" value="">
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-md-9">
+            <label class="form-label fw-semibold mb-2">
+              <i class="bi bi-geo-alt-fill text-primary me-1"></i>City / District Name
+            </label>
+            <div class="search-input-wrap">
+              <i class="bi bi-search input-icon"></i>
+              <input type="text" class="form-control" name="city"
+                     value="{{ city if not pincode else '' }}"
+                     placeholder="Ahmedabad, Rajkot, Surat, Vadodara, Bhuj, Junagadh..."
+                     required autocomplete="off" list="cityList">
+              <datalist id="cityList">
+                {% for c in ['Ahmedabad','Rajkot','Surat','Vadodara','Bhavnagar','Jamnagar',
+                             'Junagadh','Gandhinagar','Anand','Mehsana','Palanpur','Bharuch',
+                             'Morbi','Surendranagar','Bhuj','Amreli','Porbandar','Dwarka',
+                             'Navsari','Valsad','Godhra','Dahod','Patan','Himmatnagar',
+                             'Botad','Ankleshwar','Veraval','Deesa','Visnagar','Modasa'] %}
+                <option value="{{ c }}">
+                {% endfor %}
+              </datalist>
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <button type="submit" class="btn btn-primary search-btn w-100 text-white">
+              <i class="bi bi-cloud-sun me-2"></i>Get Weather
+            </button>
+          </div>
+        </div>
+        <!-- Quick city pills -->
+        <div class="d-flex flex-wrap gap-2 mt-3 align-items-center">
+          <span class="text-muted small">Quick select:</span>
+          {% for qc in ['Ahmedabad','Rajkot','Surat','Vadodara','Bhuj','Junagadh','Gandhinagar','Mehsana'] %}
+          <button type="button" class="quick-city-btn"
+                  onclick="document.querySelector('#cityForm [name=city]').value='{{ qc }}';document.getElementById('cityForm').submit()">
+            {{ qc }}
+          </button>
+          {% endfor %}
+        </div>
+      </form>
+
+      <!-- PIN Code form -->
+      <form method="POST" action="{{ url_for('weather') }}" id="pinForm"
+            {% if not pincode %}style="display:none"{% endif %}>
+        <input type="hidden" name="city" value="{{ city }}">
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-md-9">
+            <label class="form-label fw-semibold mb-2">
+              <i class="bi bi-pin-map-fill text-primary me-1"></i>6-Digit Gujarat PIN Code
+            </label>
+            <div class="search-input-wrap">
+              <i class="bi bi-123 input-icon"></i>
+              <input type="text" class="form-control" name="pincode"
+                     value="{{ pincode }}"
+                     placeholder="380001 — Ahmedabad  |  360001 — Rajkot  |  395001 — Surat"
+                     maxlength="6" pattern="[0-9]{6}" required inputmode="numeric">
+            </div>
+            <div class="form-text small text-muted mt-1">
+              <i class="bi bi-info-circle me-1"></i>
+              Common PINs: Ahmedabad 380001 · Rajkot 360001 · Surat 395001 · Vadodara 390001 · Bhuj 370001
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <button type="submit" class="btn btn-primary search-btn w-100 text-white">
+              <i class="bi bi-cloud-sun me-2"></i>Get Weather
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       RESULTS
+  ════════════════════════════════════════════════════════ -->
+  {% if result and result.success %}
+  {% set w = result.weather %}
+
+  <!-- ── Hero Current-Weather Card ───────────────────────── -->
+  <div class="card border-0 shadow-lg weather-hero mb-4">
+    <div class="hero-inner">
+      <div class="row align-items-center g-4 pb-4">
+
+        <!-- Left: Temp + description -->
+        <div class="col-md-5">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-geo-alt-fill" style="opacity:.8"></i>
+            <span class="hero-city-line">{{ w.city }}, Gujarat, India</span>
+            {% if pincode %}
+            <span style="background:rgba(255,255,255,.14);font-size:0.68rem;padding:2px 9px;border-radius:12px">
+              PIN {{ pincode }}
+            </span>
+            {% endif %}
+          </div>
+
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <div class="hero-temp-num">{{ w.temp }}</div>
+            <div>
+              <span style="font-size:2.2rem;font-weight:300;opacity:.65">°C</span>
+              <img src="https://openweathermap.org/img/wn/{{ w.icon }}@2x.png"
+                   alt="{{ w.description }}" width="68" height="68"
+                   style="display:block;margin-top:-8px"
+                   onerror="this.style.display='none'">
+            </div>
+          </div>
+
+          <div class="hero-desc mb-1">{{ w.description }}</div>
+          <div class="hero-sub">Feels like {{ w.feels_like }}°C</div>
+
+          <div class="hilow-pill">
+            <span><i class="bi bi-arrow-up-short"></i><span class="hot">{{ w.temp_max }}°</span> High</span>
+            <span style="opacity:.35">|</span>
+            <span><i class="bi bi-arrow-down-short"></i><span class="cold">{{ w.temp_min }}°</span> Low</span>
+            <span style="opacity:.35">|</span>
+            <span style="opacity:.6;font-size:0.75rem"><i class="bi bi-clock me-1"></i>{{ w.timestamp }}</span>
+          </div>
+        </div>
+
+        <!-- Right: 4 frosted stat pills -->
+        <div class="col-md-7">
+          <div class="row g-2">
+            {% for emoji, val, lbl in [
+              ('💧', w.humidity|string + '%',  'Humidity'),
+              ('💨', w.wind_speed|string + ' m/s', 'Wind Speed'),
+              ('☁️', w.clouds|string + '%',   'Cloud Cover'),
+              ('👁️', ((w.visibility//1000)|string + ' km') if w.visibility else 'N/A', 'Visibility'),
+            ] %}
+            <div class="col-6 col-md-3">
+              <div class="stat-frosted">
+                <span class="sf-emoji">{{ emoji }}</span>
+                <span class="sf-val">{{ val }}</span>
+                <span class="sf-lbl">{{ lbl }}</span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Hero bottom strip: secondary info -->
+    <div class="hero-bottom">
+      <div class="hero-bottom-item"><i class="bi bi-sunrise"></i>Sunrise {{ w.sunrise }}</div>
+      <div class="hero-bottom-item"><i class="bi bi-sunset"></i>Sunset {{ w.sunset }}</div>
+      <div class="hero-bottom-item"><i class="bi bi-cloud-drizzle"></i>Rain (1h) {{ w.rain_1h }} mm</div>
+      <div class="hero-bottom-item"><i class="bi bi-speedometer2"></i>{{ w.pressure }} hPa</div>
+      <div class="hero-bottom-item ms-auto">
+        <a href="{{ url_for('irrigation') }}?city={{ w.city }}"
+           style="color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:0.8rem">
+          <i class="bi bi-droplet-fill me-1 text-info"></i>Smart Irrigation →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7-Day Forecast ─────────────────────────────────── -->
+  {% if forecast and forecast.success %}
+
+  <!-- Section header -->
+  <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+    <h5 class="wx-section-title">
+      <i class="bi bi-calendar-week me-2"></i>7-Day Weather Forecast
+    </h5>
+    <span class="text-muted small">
+      <i class="bi bi-geo-alt me-1"></i>{{ w.city }}
+      {% if forecast.demo %}<span class="badge bg-warning text-dark ms-2">Demo Data</span>{% endif %}
+    </span>
+  </div>
+
+  <!-- 7 forecast cards -->
+  <div class="fc-grid mb-4">
+    {% for day in forecast.forecast %}
+    <div class="fc-card {% if day.is_today %}fc-today{% endif %}">
+
+      <!-- Accent bar -->
+      <div class="fc-bar"></div>
+
+      <!-- Header -->
+      <div class="fc-head">
+        <div>
+          <div class="fc-day-name">{{ day.day }}</div>
+          <div class="fc-date-str">{{ day.date }}</div>
+        </div>
+        {% if day.is_today %}<span class="fc-today-tag">TODAY</span>{% endif %}
+      </div>
+
+      <!-- Weather icon -->
+      <div class="fc-icon-area">
+        <img src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png"
+             alt="{{ day.description }}"
+             onerror="this.style.display='none'">
+      </div>
+      <div class="fc-desc-txt">{{ day.description }}</div>
+
+      <!-- Temp high / low -->
+      <div class="fc-temps">
+        <div>
+          <div class="fc-tmax">{{ day.temp_max }}°</div>
+          <div style="font-size:0.55rem;color:#e53935;text-align:center;letter-spacing:.3px">HIGH</div>
+        </div>
+        <div class="fc-sep"></div>
+        <div class="fc-tmin-wrap">
+          <div class="fc-tmin">{{ day.temp_min }}°C</div>
+          <div class="fc-tmin-lbl">LOW</div>
+        </div>
+      </div>
+
+      <!-- Rain probability bar -->
+      <div class="fc-rain-wrap">
+        <div class="fc-rain-hdr">
+          <span><i class="bi bi-cloud-drizzle text-primary me-1"></i>Rain</span>
+          <span class="fc-rain-pct">{{ day.rain_chance }}%</span>
+        </div>
+        <div class="fc-rain-track">
+          <div class="fc-rain-fill" style="width:{{ [day.rain_chance,100]|min }}%"></div>
+        </div>
+        {% if day.rain_mm and day.rain_mm > 0 %}
+        <div class="fc-rain-mm">{{ day.rain_mm }} mm expected</div>
+        {% endif %}
+      </div>
+
+      <!-- 4-detail grid -->
+      <div class="fc-details">
+        <div class="fc-det">
+          <i class="bi bi-droplet-fill text-info"></i>
+          <span><span class="det-val">{{ day.humidity }}%</span><span class="det-lbl">Humidity</span></span>
+        </div>
+        <div class="fc-det">
+          <i class="bi bi-wind text-secondary"></i>
+          <span><span class="det-val">{{ day.wind_speed }} m/s</span><span class="det-lbl">{{ day.wind_dir }} Wind</span></span>
+        </div>
+        <div class="fc-det">
+          <i class="bi bi-thermometer-half text-warning"></i>
+          <span><span class="det-val">{{ day.feels_like }}°C</span><span class="det-lbl">Feels Like</span></span>
+        </div>
+        <div class="fc-det">
+          <i class="bi bi-clouds text-secondary"></i>
+          <span><span class="det-val">{{ day.clouds }}%</span><span class="det-lbl">Clouds</span></span>
+        </div>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+
+  {% endif %}
+
+  {% elif result and not result.success %}
+  <div class="alert alert-danger rounded-4 mt-2">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <strong>Error:</strong> {{ result.error }}
+  </div>
+
+  {% else %}
+  <!-- ── Placeholder: no search yet ─────────────────────── -->
+  <div class="card border-0 shadow-sm text-center" style="border-radius:20px">
+    <div class="card-body py-5 px-4">
+      <div style="font-size:4.5rem;margin-bottom:16px">🌤️</div>
+      <h4 class="fw-bold text-dark mb-2">Check Live Weather for Gujarat</h4>
+      <p class="text-muted mb-5">Search by city name or 6-digit PIN code to get live conditions and 7-day forecast.</p>
+      <div class="row g-3 justify-content-center" style="max-width:660px;margin:0 auto">
+        {% set popular = [
+          ('Ahmedabad','380001'),('Rajkot','360001'),('Surat','395001'),
+          ('Vadodara','390001'),('Bhuj','370001'),('Junagadh','362001'),
+          ('Gandhinagar','382001'),('Anand','388001')
+        ] %}
+        {% for cname, cpin in popular %}
+        <div class="col-6 col-sm-4 col-md-3">
+          <form method="POST" action="{{ url_for('weather') }}">
+            <input type="hidden" name="city" value="{{ cname }}">
+            <input type="hidden" name="pincode" value="">
+            <button type="submit" class="card border-0 qc-card w-100 p-3">
+              <div class="qc-name">{{ cname }}</div>
+              <div class="qc-pin">PIN {{ cpin }}</div>
+            </button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function switchTab(tab, btn) {
+  document.querySelectorAll('.search-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('cityForm').style.display = tab === 'city' ? '' : 'none';
+  document.getElementById('pinForm').style.display  = tab === 'pin'  ? '' : 'none';
+}
+</script>
+{% endblock %}

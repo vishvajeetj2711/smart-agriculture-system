@@ -1,0 +1,21 @@
+{
+  "schedules": [],
+  "soil_moisture_threshold": 40,
+  "default_duration_minutes": 30,
+  "crops_water_need": {
+    "Cotton":     {"daily_mm": 4, "frequency_days": 3, "gujarati": "કપાસ"},
+    "Groundnut":  {"daily_mm": 3, "frequency_days": 4, "gujarati": "મગફળી"},
+    "Rice":       {"daily_mm": 8, "frequency_days": 1, "gujarati": "ડાંગર"},
+    "Wheat":      {"daily_mm": 4, "frequency_days": 3, "gujarati": "ઘઉં"},
+    "Bajra":      {"daily_mm": 2, "frequency_days": 5, "gujarati": "બાજરો"},
+    "Sugarcane":  {"daily_mm": 6, "frequency_days": 2, "gujarati": "શેરડી"},
+    "Castor":     {"daily_mm": 3, "frequency_days": 4, "gujarati": "એરંડો"},
+    "Maize":      {"daily_mm": 5, "frequency_days": 2, "gujarati": "મકાઈ"},
+    "Cumin":      {"daily_mm": 2, "frequency_days": 5, "gujarati": "જીરું"},
+    "Onion":      {"daily_mm": 3, "frequency_days": 3, "gujarati": "ડુંગળી"},
+    "Tomato":     {"daily_mm": 5, "frequency_days": 2, "gujarati": "ટામેટા"},
+    "Mango":      {"daily_mm": 3, "frequency_days": 5, "gujarati": "કેરી"},
+    "Vegetables": {"daily_mm": 5, "frequency_days": 2, "gujarati": "શાકભાજી"},
+    "Other":      {"daily_mm": 4, "frequency_days": 3, "gujarati": "અન્ય"}
+  }
+}

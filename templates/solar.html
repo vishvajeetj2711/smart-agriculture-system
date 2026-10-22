@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+{% block title %}Solar Income Estimator — Smart Agriculture Gujarat{% endblock %}
+{% block content %}
+<div class="container-fluid px-3 py-3">
+
+  <div class="page-header mb-4">
+    <h2 class="page-title">☀️ Solar Panel Income Estimator</h2>
+    <p class="text-muted mb-0">Gujarat gets avg 6.5 hrs/day sunshine — Calculate solar income &amp; PM-KUSUM subsidy</p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- Input Form -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header fw-bold text-white" style="background:#f39c12">
+          <i class="bi bi-sun-fill me-2"></i>Solar Setup Details
+        </div>
+        <div class="card-body p-4">
+          <form method="POST" action="{{ url_for('solar') }}" id="solarForm">
+
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-semibold">Total Land (Acres)</label>
+                <input type="number" class="form-control form-control-lg"
+                       name="total_land" id="totalLand"
+                       min="0.5" max="1000" step="0.5" placeholder="5" required
+                       oninput="validateLand()">
+              </div>
+              <div class="col-6">
+                <label class="form-label fw-semibold">Solar Land (Acres)</label>
+                <input type="number" class="form-control form-control-lg"
+                       name="solar_land" id="solarLand"
+                       min="0.1" max="1000" step="0.5" placeholder="1" required
+                       oninput="validateLand()">
+                <div class="form-text small text-muted" id="landHint"></div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Farming Crop</label>
+              <select class="form-select" name="crop">
+                {% for c in ['Cotton','Groundnut','Castor','Cumin','Wheat','Rice',
+                             'Sugarcane','Mango','Vegetables','Other'] %}
+                <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                Govt Rate per kWh (Rs.)
+                <span class="badge bg-secondary ms-1" id="rateDisplay">3.50</span>
+              </label>
+              <input type="range" class="form-range" name="rate_per_kwh" id="rateSlider"
+                     min="2.0" max="7.0" step="0.25" value="3.50"
+                     oninput="document.getElementById('rateDisplay').textContent=parseFloat(this.value).toFixed(2)">
+              <div class="d-flex justify-content-between small text-muted">
+                <span>Rs. 2.00</span><span>Gujarat: Rs. 3.50</span><span>Rs. 7.00</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                Daily Sunlight Hours
+                <span class="badge bg-warning text-dark ms-1" id="sunDisplay">6.5</span>
+              </label>
+              <input type="range" class="form-range" name="sunlight_hours" id="sunSlider"
+                     min="3.0" max="8.0" step="0.5" value="6.5"
+                     oninput="document.getElementById('sunDisplay').textContent=this.value">
+              <div class="d-flex justify-content-between small text-muted">
+                <span>3 hrs (Low)</span><span>Gujarat avg 6.5 hrs</span><span>8 hrs</span>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">
+                PM-KUSUM Subsidy %
+                <span class="badge bg-success ms-1" id="subDisplay">30</span>%
+              </label>
+              <input type="range" class="form-range" name="subsidy_pct" id="subSlider"
+                     min="0" max="0.60" step="0.05" value="0.30"
+                     oninput="document.getElementById('subDisplay').textContent=Math.round(this.value*100)">
+              <div class="form-text small text-success">
+                PM-KUSUM: 30% Central + 30% Gujarat State = 60% subsidy available
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-lg w-100 fw-bold text-white" style="background:#f39c12">
+              <i class="bi bi-calculator me-2"></i>Calculate Solar Income
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Gujarat Solar Facts -->
+      <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-3">
+          <h6 class="fw-bold mb-2">☀️ Gujarat Solar Facts</h6>
+          <ul class="list-unstyled small mb-0">
+            <li class="mb-1"><i class="bi bi-sun-fill text-warning me-2"></i>Avg sunlight: <strong>6.5 hrs/day</strong></li>
+            <li class="mb-1"><i class="bi bi-lightning-fill text-warning me-2"></i>Govt rate: <strong>Rs. 3.50/kWh</strong> (DGVCL/PGVCL)</li>
+            <li class="mb-1"><i class="bi bi-bank2 text-success me-2"></i>PM-KUSUM: <strong>60% subsidy</strong></li>
+            <li class="mb-1"><i class="bi bi-telephone-fill text-primary me-2"></i>GEDA helpline: <strong>079-23259411</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="col-lg-8">
+      {% if result and result.success %}
+      {% set s    = result.solar %}
+      {% set c    = result.cost %}
+      {% set f    = result.farming %}
+      {% set comb = result.combined %}
+      {% set opt  = result.optimal %}
+
+      <!-- Income Banner -->
+      <div class="hero-banner rounded-4 mb-4 p-4" style="background:linear-gradient(135deg,#f39c12,#e67e22)">
+        <div class="row g-3 text-white text-center">
+          <div class="col-4">
+            <div class="fs-3 fw-bold">Rs.{{ '{:,}'.format(s.monthly_income) }}</div>
+            <div class="small opacity-75">Solar Income / Month</div>
+          </div>
+          <div class="col-4">
+            <div class="fs-3 fw-bold">Rs.{{ '{:,}'.format(comb.total_annual_income) }}</div>
+            <div class="small opacity-75">Total Income / Year</div>
+          </div>
+          <div class="col-4">
+            <div class="fs-3 fw-bold">{{ c.payback_years }} yrs</div>
+            <div class="small opacity-75">Payback Period</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <!-- Solar Stats -->
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header fw-semibold text-white" style="background:#f39c12">
+              ☀️ Solar Generation
+            </div>
+            <div class="card-body p-3">
+              <table class="table table-sm table-borderless mb-0">
+                <tr><td class="text-muted">Panels Installed</td>
+                    <td class="fw-bold text-end">{{ '{:,}'.format(s.num_panels) }}</td></tr>
+                <tr><td class="text-muted">Total Capacity</td>
+                    <td class="fw-bold text-end">{{ s.total_kw }} kW</td></tr>
+                <tr><td class="text-muted">Daily Generation</td>
+                    <td class="fw-bold text-end">{{ s.daily_kwh }} kWh</td></tr>
+                <tr><td class="text-muted">Monthly Generation</td>
+                    <td class="fw-bold text-end">{{ '{:,}'.format(s.monthly_kwh|int) }} kWh</td></tr>
+                <tr class="table-warning">
+                  <td class="fw-semibold">Solar Income / Month</td>
+                  <td class="fw-bold text-end text-success fs-5">Rs.{{ '{:,}'.format(s.monthly_income) }}</td>
+                </tr>
+                <tr class="table-success">
+                  <td class="fw-semibold">Net Annual Income</td>
+                  <td class="fw-bold text-end text-success">Rs.{{ '{:,}'.format(s.net_annual_income) }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Investment -->
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header fw-semibold text-white bg-secondary">
+              💰 Investment &amp; ROI
+            </div>
+            <div class="card-body p-3">
+              <table class="table table-sm table-borderless mb-0">
+                <tr><td class="text-muted">Hardware Cost</td>
+                    <td class="fw-bold text-end">Rs.{{ '{:,}'.format(c.hardware_cost) }}</td></tr>
+                <tr><td class="text-muted">Installation Cost</td>
+                    <td class="fw-bold text-end">Rs.{{ '{:,}'.format(c.installation_cost) }}</td></tr>
+                <tr><td class="text-muted">Total Cost</td>
+                    <td class="fw-bold text-end">Rs.{{ '{:,}'.format(c.total_cost) }}</td></tr>
+                <tr class="table-success">
+                  <td class="text-success fw-semibold">PM-KUSUM Subsidy</td>
+                  <td class="fw-bold text-end text-success">−Rs.{{ '{:,}'.format(c.subsidy_amount) }}</td>
+                </tr>
+                <tr class="table-warning">
+                  <td class="fw-semibold">Net Investment</td>
+                  <td class="fw-bold text-end fs-5">Rs.{{ '{:,}'.format(c.net_cost) }}</td>
+                </tr>
+                <tr><td class="text-muted">Annual Maintenance</td>
+                    <td class="fw-bold text-end">Rs.{{ '{:,}'.format(c.annual_maintenance) }}</td></tr>
+                <tr class="table-primary">
+                  <td class="fw-semibold">Payback Period</td>
+                  <td class="fw-bold text-end text-primary">{{ c.payback_years }} years</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Combined Income -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-success text-white fw-semibold">
+              🌾 Combined Farm + Solar Income
+            </div>
+            <div class="card-body p-3">
+              <div class="row g-3 mb-3">
+                <div class="col-md-4 text-center">
+                  <div class="p-3 rounded-3 bg-warning-soft">
+                    <div class="fs-5 fw-bold" style="color:#f39c12">Rs.{{ '{:,}'.format(s.net_annual_income) }}</div>
+                    <div class="small text-muted">Solar / Year ({{ result.input.solar_land }} acres)</div>
+                  </div>
+                </div>
+                <div class="col-md-4 text-center">
+                  <div class="p-3 rounded-3 bg-primary-soft">
+                    <div class="fs-5 fw-bold text-primary">Rs.{{ '{:,}'.format(f.annual_income) }}</div>
+                    <div class="small text-muted">{{ f.crop }} Farming / Year ({{ f.land_acres }} acres)</div>
+                  </div>
+                </div>
+                <div class="col-md-4 text-center">
+                  <div class="p-3 rounded-3 bg-success-soft">
+                    <div class="fs-5 fw-bold text-success">Rs.{{ '{:,}'.format(comb.total_annual_income) }}</div>
+                    <div class="small text-muted">Total Combined / Year</div>
+                  </div>
+                </div>
+              </div>
+
+              {% if comb.extra_vs_farming > 0 %}
+              <div class="alert alert-success mb-2 py-2">
+                <i class="bi bi-graph-up-arrow me-2"></i>
+                By adding solar you earn
+                <strong>Rs.{{ '{:,}'.format(comb.extra_vs_farming) }} more per year</strong>
+                ({{ comb.extra_pct }}% extra) compared to farming alone.
+              </div>
+              {% endif %}
+
+              <div class="alert alert-info mb-0 py-2">
+                <i class="bi bi-lightbulb-fill me-2 text-warning"></i>
+                <strong>Optimal Advice:</strong> {{ opt.note }}
+                {% if opt.solar_acres != result.input.solar_land %}
+                <span class="badge bg-primary ms-2">
+                  Best split: {{ opt.solar_acres }} ac solar + {{ opt.farming_acres }} ac farming
+                  = Rs.{{ '{:,}'.format(opt.total_income|int) }}/yr
+                </span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Govt Schemes -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm border-warning border-top border-3">
+            <div class="card-body p-3">
+              <h6 class="fw-bold mb-2">🏛️ Government Schemes for Gujarat Farmers</h6>
+              <div class="row g-2 small">
+                <div class="col-md-4">
+                  <i class="bi bi-check-circle-fill text-success me-1"></i>
+                  <strong>PM-KUSUM:</strong> 30% central + 30% Gujarat state subsidy on solar panels and pumps.
+                </div>
+                <div class="col-md-4">
+                  <i class="bi bi-check-circle-fill text-success me-1"></i>
+                  <strong>Net Metering:</strong> Sell surplus solar power to DGVCL/PGVCL/UGVCL at Rs.3.50/kWh.
+                </div>
+                <div class="col-md-4">
+                  <i class="bi bi-telephone-fill text-primary me-1"></i>
+                  <strong>GEDA:</strong> 079-23259411 &nbsp;|&nbsp;
+                  <strong>MNRE:</strong> 1800-180-3333
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% elif result and not result.success %}
+      <div class="alert alert-danger">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ result.error }}
+      </div>
+      {% else %}
+      <div class="card border-0 shadow-sm text-center">
+        <div class="card-body py-5">
+          <div class="placeholder-icon mb-3">☀️</div>
+          <h5 class="text-muted">Enter land details to see Gujarat solar income estimate</h5>
+          <p class="text-muted small mb-4">Calculate number of panels, monthly income, payback period and optimal land split.</p>
+          <div class="row g-3 justify-content-center">
+            <div class="col-auto">
+              <div class="p-3 rounded-3 bg-warning-soft text-center">
+                <div class="fs-3">☀️</div>
+                <div class="fw-bold">6.5 hrs/day</div>
+                <small class="text-muted">Gujarat Avg Sunlight</small>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="p-3 rounded-3 bg-success-soft text-center">
+                <div class="fs-3">🏛️</div>
+                <div class="fw-bold">60% Subsidy</div>
+                <small class="text-muted">PM-KUSUM Scheme</small>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="p-3 rounded-3 bg-primary-soft text-center">
+                <div class="fs-3">⚡</div>
+                <div class="fw-bold">Rs. 3.50/kWh</div>
+                <small class="text-muted">Gujarat Govt Rate</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function validateLand() {
+  const total  = parseFloat(document.getElementById('totalLand').value) || 0;
+  const solar  = parseFloat(document.getElementById('solarLand').value) || 0;
+  const hint   = document.getElementById('landHint');
+  const sInput = document.getElementById('solarLand');
+  if (solar >= total && total > 0) {
+    hint.textContent = 'Solar land must be less than total land';
+    hint.className   = 'form-text text-danger small';
+    sInput.classList.add('is-invalid');
+  } else {
+    hint.textContent = 'Farming land: ' + (total - solar).toFixed(1) + ' acres';
+    hint.className   = 'form-text text-muted small';
+    sInput.classList.remove('is-invalid');
+  }
+}
+</script>
+{% endblock %}

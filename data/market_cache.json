@@ -1,0 +1,340 @@
+{
+  "Wheat_Maharashtra": {
+    "prices": [
+      {
+        "market": "Kolhapur",
+        "state": "Maharashtra",
+        "district": "Kolhapur",
+        "commodity": "Wheat",
+        "variety": "General",
+        "min_price": 2525,
+        "max_price": 2752,
+        "modal_price": 2639,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Nagpur",
+        "state": "Maharashtra",
+        "district": "Nagpur",
+        "commodity": "Wheat",
+        "variety": "General",
+        "min_price": 2179,
+        "max_price": 2407,
+        "modal_price": 2293,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Nashik",
+        "state": "Maharashtra",
+        "district": "Nashik",
+        "commodity": "Wheat",
+        "variety": "General",
+        "min_price": 2123,
+        "max_price": 2351,
+        "modal_price": 2237,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Aurangabad",
+        "state": "Maharashtra",
+        "district": "Aurangabad",
+        "commodity": "Wheat",
+        "variety": "General",
+        "min_price": 2077,
+        "max_price": 2305,
+        "modal_price": 2191,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Pune",
+        "state": "Maharashtra",
+        "district": "Pune",
+        "commodity": "Wheat",
+        "variety": "General",
+        "min_price": 1943,
+        "max_price": 2171,
+        "modal_price": 2057,
+        "date": "25/09/2026"
+      }
+    ],
+    "timestamp": "2026-09-25T13:38:30.548265",
+    "demo": true
+  },
+  "Cotton_Maharashtra": {
+    "prices": [
+      {
+        "market": "Nagpur",
+        "state": "Maharashtra",
+        "district": "Nagpur",
+        "commodity": "Cotton",
+        "variety": "General",
+        "min_price": 7279,
+        "max_price": 7941,
+        "modal_price": 7610,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Nashik",
+        "state": "Maharashtra",
+        "district": "Nashik",
+        "commodity": "Cotton",
+        "variety": "General",
+        "min_price": 7182,
+        "max_price": 7844,
+        "modal_price": 7513,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Pune",
+        "state": "Maharashtra",
+        "district": "Pune",
+        "commodity": "Cotton",
+        "variety": "General",
+        "min_price": 6948,
+        "max_price": 7610,
+        "modal_price": 7279,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Kolhapur",
+        "state": "Maharashtra",
+        "district": "Kolhapur",
+        "commodity": "Cotton",
+        "variety": "General",
+        "min_price": 6377,
+        "max_price": 7039,
+        "modal_price": 6708,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Aurangabad",
+        "state": "Maharashtra",
+        "district": "Aurangabad",
+        "commodity": "Cotton",
+        "variety": "General",
+        "min_price": 6138,
+        "max_price": 6800,
+        "modal_price": 6469,
+        "date": "25/09/2026"
+      }
+    ],
+    "timestamp": "2026-09-25T13:48:58.463636",
+    "demo": true
+  },
+  "Wheat_Ahmedabad_gujarat": {
+    "prices": [
+      {
+        "market": "Sanand",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 2431,
+        "max_price": 2659,
+        "modal_price": 2522,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Bavla",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 2393,
+        "max_price": 2620,
+        "modal_price": 2484,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Dholka",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 2295,
+        "max_price": 2523,
+        "modal_price": 2386,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Ahmedabad",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 2182,
+        "max_price": 2409,
+        "modal_price": 2273,
+        "date": "25/09/2026"
+      }
+    ],
+    "timestamp": "2026-09-25T19:25:38.060901",
+    "demo": true
+  },
+  "Wheat_Anand_gujarat": {
+    "prices": [
+      {
+        "market": "Khambhat",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 2365,
+        "max_price": 2592,
+        "modal_price": 2456,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Petlad",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 2349,
+        "max_price": 2576,
+        "modal_price": 2440,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Sojitra",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 1979,
+        "max_price": 2207,
+        "modal_price": 2070,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Anand",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Wheat",
+        "gujarati_commodity": "ઘઉં",
+        "variety": "General",
+        "min_price": 1964,
+        "max_price": 2191,
+        "modal_price": 2055,
+        "date": "25/09/2026"
+      }
+    ],
+    "timestamp": "2026-09-25T19:51:56.588560",
+    "demo": true
+  },
+  "Rice_Ahmedabad_gujarat": {
+    "prices": [
+      {
+        "market": "Dholka",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2423,
+        "max_price": 2641,
+        "modal_price": 2510,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Bavla",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2391,
+        "max_price": 2609,
+        "modal_price": 2478,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Sanand",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2221,
+        "max_price": 2439,
+        "modal_price": 2308,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Ahmedabad",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2005,
+        "max_price": 2223,
+        "modal_price": 2092,
+        "date": "25/09/2026"
+      }
+    ],
+    "timestamp": "2026-09-25T20:32:01.887670",
+    "demo": true
+  },
+  "Rice_Anand_gujarat": {
+    "prices": [
+      {
+        "market": "Sojitra",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2419,
+        "max_price": 2638,
+        "modal_price": 2507,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Anand",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2362,
+        "max_price": 2581,
+        "modal_price": 2450,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Khambhat",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2347,
+        "max_price": 2565,
+        "modal_price": 2434,
+        "date": "25/09/2026"
+      },
+      {
+        "market": "Petlad",
+        "district": "Anand",
+        "state": "Gujarat",
+        "commodity": "Rice",
+        "gujarati_commodity": "ડાંગર",
+        "variety": "General",
+        "min_price": 2281,
+        "max_price": 2499,
+        "modal_price": 2368,
+        "date": "25/09/2026"
+      }
+    ],
+    "timestamp": "2026-09-25T20:34:23.987250",
+    "demo": true
+  }
+}

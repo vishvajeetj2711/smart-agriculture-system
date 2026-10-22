@@ -1,0 +1,602 @@
+[
+  {
+    "timestamp": "2026-09-25T20:55:24.844829",
+    "city": "Ahmedabad",
+    "temp": 34,
+    "humidity": 55
+  },
+  {
+    "timestamp": "2026-09-25T21:17:59.101866",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:19:06.702910",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:19:34.447224",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:20:02.776017",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:20:06.568503",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:20:57.705340",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:21:02.373212",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:27:15.161442",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:29:34.669447",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:31:43.454057",
+    "city": "Ahmedabad",
+    "temp": 29,
+    "humidity": 54
+  },
+  {
+    "timestamp": "2026-09-25T21:40:00.086197",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:40:05.224861",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:41:00.727709",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:41:09.843033",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:41:23.257468",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:42:07.085829",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:42:17.014047",
+    "city": "Rajkot",
+    "temp": 30.9,
+    "humidity": 77
+  },
+  {
+    "timestamp": "2026-09-25T21:42:20.703674",
+    "city": "",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:42:24.594258",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:42:57.874138",
+    "city": "Rajkot",
+    "temp": 30.9,
+    "humidity": 77
+  },
+  {
+    "timestamp": "2026-09-25T21:42:59.206151",
+    "city": "Rajkot",
+    "temp": 30.9,
+    "humidity": 77
+  },
+  {
+    "timestamp": "2026-09-25T21:43:42.829071",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:56:28.128199",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:56:34.940708",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:56:50.502353",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:56:53.870687",
+    "city": "Rajkot",
+    "temp": 31.2,
+    "humidity": 77
+  },
+  {
+    "timestamp": "2026-09-25T21:56:57.119023",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T21:57:37.502492",
+    "city": "Ahmedabad",
+    "temp": 29.0,
+    "humidity": 57
+  },
+  {
+    "timestamp": "2026-09-25T22:15:24.581215",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 58
+  },
+  {
+    "timestamp": "2026-09-25T22:15:47.998252",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 58
+  },
+  {
+    "timestamp": "2026-09-25T22:22:01.392827",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 58
+  },
+  {
+    "timestamp": "2026-09-25T22:23:54.504163",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 58
+  },
+  {
+    "timestamp": "2026-09-25T22:24:26.044704",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 58
+  },
+  {
+    "timestamp": "2026-09-25T22:25:24.019446",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 58
+  },
+  {
+    "timestamp": "2026-09-25T22:26:39.577334",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:29:23.508927",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:29:29.929602",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:32:46.975038",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:33:04.637074",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:33:31.685153",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:33:47.841116",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:35:21.724901",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:35:26.434457",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:35:29.064986",
+    "city": "Surat",
+    "temp": 27.7,
+    "humidity": 86
+  },
+  {
+    "timestamp": "2026-09-25T22:35:32.683498",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:35:58.602857",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:36:08.899820",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:36:18.150342",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 60
+  },
+  {
+    "timestamp": "2026-09-25T22:37:00.747339",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 61
+  },
+  {
+    "timestamp": "2026-09-25T22:39:54.920918",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 61
+  },
+  {
+    "timestamp": "2026-09-25T22:40:19.426010",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 61
+  },
+  {
+    "timestamp": "2026-09-25T22:40:31.041770",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 61
+  },
+  {
+    "timestamp": "2026-09-25T22:41:43.956823",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 61
+  },
+  {
+    "timestamp": "2026-09-25T22:44:35.540033",
+    "city": "Rajkot",
+    "temp": 26.5,
+    "humidity": 78
+  },
+  {
+    "timestamp": "2026-09-25T22:45:13.201305",
+    "city": "Rajkot",
+    "temp": 26.5,
+    "humidity": 78
+  },
+  {
+    "timestamp": "2026-09-25T22:45:40.041284",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 61
+  },
+  {
+    "timestamp": "2026-09-25T22:45:51.769988",
+    "city": "Ahmedabad",
+    "temp": 29.6,
+    "humidity": 61
+  },
+  {
+    "timestamp": "2026-09-25T23:00:26.678595",
+    "city": "Ahmedabad",
+    "temp": 28.7,
+    "humidity": 62
+  },
+  {
+    "timestamp": "2026-09-25T23:03:52.560048",
+    "city": "Ahmedabad",
+    "temp": 28.7,
+    "humidity": 62
+  },
+  {
+    "timestamp": "2026-09-25T23:03:54.850250",
+    "city": "Ahmedabad",
+    "temp": 28.7,
+    "humidity": 62
+  },
+  {
+    "timestamp": "2026-09-25T23:04:04.542166",
+    "city": "Ahmedabad",
+    "temp": 28.7,
+    "humidity": 62
+  },
+  {
+    "timestamp": "2026-09-25T23:04:06.077736",
+    "city": "Ahmedabad",
+    "temp": 28.7,
+    "humidity": 62
+  },
+  {
+    "timestamp": "2026-09-26T07:58:31.266356",
+    "city": "Ahmedabad",
+    "temp": 25.5,
+    "humidity": 78
+  },
+  {
+    "timestamp": "2026-09-26T07:58:46.761489",
+    "city": "Ahmedabad",
+    "temp": 25.5,
+    "humidity": 78
+  },
+  {
+    "timestamp": "2026-09-26T07:59:06.009639",
+    "city": "Ahmedabad",
+    "temp": 25.5,
+    "humidity": 78
+  },
+  {
+    "timestamp": "2026-09-26T08:00:39.976558",
+    "city": "Ahmedabad",
+    "temp": 25.5,
+    "humidity": 78
+  },
+  {
+    "timestamp": "2026-09-26T08:22:02.804208",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:22:03.725011",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:22:06.388158",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:23:07.111103",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:23:09.260956",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:23:11.305510",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:23:13.152403",
+    "city": "Rajkot",
+    "temp": 28.2,
+    "humidity": 80
+  },
+  {
+    "timestamp": "2026-09-26T08:25:17.366440",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:25:28.223069",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:25:44.298143",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:27:09.927742",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:32:17.429402",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:33:13.635373",
+    "city": "Bhuj",
+    "temp": 26.9,
+    "humidity": 74
+  },
+  {
+    "timestamp": "2026-09-26T08:33:32.273160",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:33:37.192228",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:33:45.381300",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:33:47.425887",
+    "city": "Ahmedabad",
+    "temp": 26.2,
+    "humidity": 76
+  },
+  {
+    "timestamp": "2026-09-26T08:44:22.103860",
+    "city": "Bhuj",
+    "temp": 26.9,
+    "humidity": 74
+  },
+  {
+    "timestamp": "2026-09-26T08:48:57.268275",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T08:49:38.773451",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T08:58:57.546162",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T08:59:45.699741",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T09:02:27.571521",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T09:02:43.033204",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T09:03:03.116598",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T09:08:58.804208",
+    "city": "Ahmedabad",
+    "temp": 26.4,
+    "humidity": 73
+  },
+  {
+    "timestamp": "2026-09-26T10:39:49.260573",
+    "city": "Ahmedabad",
+    "temp": 28.2,
+    "humidity": 63
+  },
+  {
+    "timestamp": "2026-10-14T17:15:46.614502",
+    "city": "Ahmedabad",
+    "temp": 34.8,
+    "humidity": 33
+  },
+  {
+    "timestamp": "2026-10-14T17:15:55.178458",
+    "city": "Ahmedabad",
+    "temp": 34.8,
+    "humidity": 33
+  },
+  {
+    "timestamp": "2026-10-14T17:15:56.262470",
+    "city": "Ahmedabad",
+    "temp": 34.8,
+    "humidity": 33
+  },
+  {
+    "timestamp": "2026-10-14T17:15:57.650584",
+    "city": "Ahmedabad",
+    "temp": 34.8,
+    "humidity": 33
+  },
+  {
+    "timestamp": "2026-10-16T13:49:05.882852",
+    "city": "Ahmedabad",
+    "temp": 35.2,
+    "humidity": 31
+  },
+  {
+    "timestamp": "2026-10-16T13:49:17.396635",
+    "city": "Ahmedabad",
+    "temp": 35.2,
+    "humidity": 31
+  }
+]

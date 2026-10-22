@@ -1,0 +1,419 @@
+/* ═══════════════════════════════════════════════════════════════
+   Smart Agriculture System — Main Stylesheet
+   Theme: Green Earthy | Farmer-Friendly | Mobile-First
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Google Font ─────────────────────────────────────────────── */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f7f2;
+  color: #2c3e2d;
+  font-size: 15px;
+  min-height: 100vh;
+}
+
+/* ── CSS Custom Properties ───────────────────────────────────── */
+:root {
+  --green-dark:   #1a5c2a;
+  --green-main:   #2e7d32;
+  --green-light:  #4caf50;
+  --green-soft:   #e8f5e9;
+  --earth-brown:  #5d4037;
+  --earth-tan:    #a1887f;
+  --sky-blue:     #0288d1;
+  --sun-yellow:   #f9a825;
+  --water-blue:   #0277bd;
+  --danger-red:   #c62828;
+}
+
+/* ── Navbar ──────────────────────────────────────────────────── */
+.bg-primary-green {
+  background: linear-gradient(135deg, var(--green-dark), var(--green-main)) !important;
+}
+
+.navbar-brand .brand-icon { font-size: 1.6rem; }
+
+.navbar .nav-link {
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 5px 10px !important;
+  transition: background 0.2s, color 0.2s;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  background: rgba(255,255,255,0.18);
+  color: #fff !important;
+}
+
+/* ── Sidebar Offcanvas ───────────────────────────────────────── */
+.sidebar-offcanvas { max-width: 280px; }
+
+.sidebar-menu { background: #fff; }
+
+.sidebar-item { border-bottom: 1px solid #f0f0f0 !important; padding: 0 !important; }
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  color: #2c3e2d;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.15s;
+}
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: var(--green-soft);
+  color: var(--green-main);
+}
+.sidebar-icon { font-size: 1.4rem; min-width: 28px; text-align: center; }
+
+/* ── Main Content ────────────────────────────────────────────── */
+.main-content {
+  min-height: calc(100vh - 140px);
+  padding-bottom: 2rem;
+}
+
+/* ── Page Header ─────────────────────────────────────────────── */
+.page-header {
+  padding: 1rem 1rem 0;
+}
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin-bottom: 0.25rem;
+}
+
+/* ── Hero Banner (Dashboard) ─────────────────────────────────── */
+.hero-banner {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32, #388e3c);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: '🌾';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 5rem;
+  opacity: 0.15;
+}
+.hero-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+.hero-subtitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+}
+
+/* ── Module Cards (Dashboard) ────────────────────────────────── */
+.module-card {
+  border-radius: 16px !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(46,125,50,0.15) !important;
+}
+.module-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto;
+}
+
+/* ── Section Title ───────────────────────────────────────────── */
+.section-title {
+  font-weight: 600;
+  color: var(--green-dark);
+  font-size: 1.05rem;
+  border-left: 4px solid var(--green-light);
+  padding-left: 10px;
+}
+
+/* ── Weather Summary Card ────────────────────────────────────── */
+.weather-summary-card {
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, #ffffff, #f1f8f2);
+}
+.weather-card {
+  border-radius: 16px !important;
+}
+.weather-stat {
+  background: #f8fdf8;
+  border-radius: 12px;
+  padding: 10px 6px;
+}
+.weather-stat-icon { font-size: 1.3rem; margin-bottom: 2px; }
+
+/* ── Forecast Day Cards ──────────────────────────────────────── */
+.forecast-day-card {
+  border-radius: 12px !important;
+  min-width: 70px;
+  transition: transform 0.15s;
+}
+.forecast-day-card:hover { transform: translateY(-3px); }
+
+/* ── Tip Cards (Dashboard) ───────────────────────────────────── */
+.tip-card {
+  border-radius: 14px !important;
+  border-left: 4px solid var(--green-light) !important;
+}
+.tip-icon { font-size: 2rem; }
+
+/* ── Stat Cards ──────────────────────────────────────────────── */
+.stat-card { border-radius: 12px; }
+.stat-pill {
+  border-radius: 10px;
+  padding: 8px;
+}
+
+/* ── Info Chip ───────────────────────────────────────────────── */
+.info-chip {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+}
+
+/* ── Result Banner ───────────────────────────────────────────── */
+.result-banner { border-radius: 16px !important; }
+.result-big-icon { font-size: 3.5rem; line-height: 1; }
+
+/* ── Upload Zone (Disease) ───────────────────────────────────── */
+.upload-zone {
+  border: 2.5px dashed #81c784;
+  border-radius: 16px;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  background: #f8fdf8;
+  transition: border-color 0.2s, background 0.2s;
+}
+.upload-zone:hover {
+  border-color: var(--green-main);
+  background: var(--green-soft);
+}
+.upload-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+.upload-preview {
+  max-height: 180px;
+  max-width: 100%;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* ── Placeholder icons ───────────────────────────────────────── */
+.placeholder-icon { font-size: 4rem; }
+
+/* ── Fertilizer icon ─────────────────────────────────────────── */
+.fert-icon { min-width: 48px; text-align: center; }
+
+/* ── Cards general ───────────────────────────────────────────── */
+.card { border-radius: 14px !important; }
+.card-header { border-radius: 14px 14px 0 0 !important; font-size: 0.95rem; }
+
+/* ── Soft Color Backgrounds ──────────────────────────────────── */
+.bg-success-soft   { background-color: #e8f5e9 !important; }
+.bg-danger-soft    { background-color: #ffebee !important; }
+.bg-warning-soft   { background-color: #fff8e1 !important; }
+.bg-info-soft      { background-color: #e3f2fd !important; }
+.bg-primary-soft   { background-color: #e8eaf6 !important; }
+.bg-secondary-soft { background-color: #f5f5f5 !important; }
+
+.text-success  { color: var(--green-main) !important; }
+
+/* Ensure badge soft text colors */
+.badge.bg-success-soft { background-color: #e8f5e9 !important; }
+.badge.bg-danger-soft  { background-color: #ffebee !important; }
+.badge.bg-warning-soft { background-color: #fff8e1 !important; }
+.badge.bg-info-soft    { background-color: #e3f2fd !important; }
+.badge.bg-primary-soft { background-color: #e8eaf6 !important; }
+
+/* ── Tables ──────────────────────────────────────────────────── */
+.table th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #555;
+}
+.table td { font-size: 0.9rem; }
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn-success {
+  background-color: var(--green-main) !important;
+  border-color: var(--green-main) !important;
+}
+.btn-success:hover {
+  background-color: var(--green-dark) !important;
+  border-color: var(--green-dark) !important;
+}
+.btn {
+  border-radius: 10px !important;
+  font-weight: 500;
+}
+.btn-lg { font-size: 1rem; padding: 12px 24px; }
+
+/* ── Form Controls ───────────────────────────────────────────── */
+.form-control, .form-select {
+  border-radius: 10px !important;
+  border: 1.5px solid #d0d0d0;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--green-light);
+  box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+}
+.form-label { font-size: 0.92rem; color: #333; margin-bottom: 4px; }
+.input-group-text { border-radius: 10px 0 0 10px !important; }
+
+/* ── Range inputs ────────────────────────────────────────────── */
+.form-range::-webkit-slider-thumb {
+  background: var(--green-main);
+}
+.form-range::-webkit-slider-runnable-track {
+  background: #c8e6c9;
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* ── Alerts ──────────────────────────────────────────────────── */
+.alert { border-radius: 12px !important; border: none; }
+.alert-success { background-color: #e8f5e9; color: #1b5e20; }
+.alert-warning { background-color: #fff8e1; color: #e65100; }
+.alert-danger  { background-color: #ffebee; color: #b71c1c; }
+.alert-info    { background-color: #e3f2fd; color: #0d47a1; }
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer-bar {
+  background: #f0f4f0;
+  border-top: 1px solid #dcedc8;
+}
+
+/* ── Progress bars ───────────────────────────────────────────── */
+.progress { border-radius: 10px; background: #e9ecef; }
+.progress-bar { border-radius: 10px; }
+
+/* ── Badges ──────────────────────────────────────────────────── */
+.badge { font-weight: 500; letter-spacing: 0.01em; }
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #a5d6a7; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--green-main); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 576px)
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 576px) {
+  .page-title { font-size: 1.3rem; }
+  .hero-title  { font-size: 1.2rem; }
+  .display-5   { font-size: 2rem; }
+  .module-icon { width: 50px; height: 50px; font-size: 1.6rem; }
+  .btn-lg      { font-size: 0.95rem; padding: 10px 16px; }
+  .forecast-day-card { min-width: 58px; }
+  .card-header { font-size: 0.88rem; }
+  .table th, .table td { font-size: 0.8rem; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT STYLES
+═══════════════════════════════════════════════════════════════ */
+@media print {
+  .navbar, .footer-bar, form, .btn { display: none !important; }
+  .card { box-shadow: none !important; border: 1px solid #ccc !important; }
+  body { background: white; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GUJARATI BILINGUAL STYLES
+═══════════════════════════════════════════════════════════════ */
+.guj-text {
+  font-family: 'Noto Sans Gujarati', 'Poppins', sans-serif;
+}
+.guj-nav {
+  font-family: 'Noto Sans Gujarati', sans-serif;
+  font-size: 0.6rem;
+  display: block;
+  opacity: 0.8;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+/* ── WhatsApp Alert Panel ─────────────────────────────────── */
+.wa-panel { border-left: 5px solid #25D366 !important; }
+.wa-btn   { background: #25D366 !important; color: #fff !important; border: none !important; }
+.wa-btn:hover  { background: #1ebe5e !important; }
+.wa-stop-btn   { background: #e74c3c !important; color: #fff !important; border: none !important; }
+.wa-stop-btn:hover { background: #c0392b !important; }
+.wa-icon { color: #25D366; }
+.tab-pill {
+  cursor: pointer;
+  border-radius: 30px !important;
+  font-size: 0.88rem;
+  padding: 7px 16px;
+  transition: all 0.15s;
+}
+.tab-pill.active {
+  background: #25D366 !important;
+  color: #fff !important;
+  border-color: #25D366 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LANGUAGE TOGGLE BUTTON
+═══════════════════════════════════════════════════════════════ */
+.lang-toggle-btn {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: 30px !important;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.lang-toggle-btn:hover {
+  background: rgba(255,255,255,0.28);
+  color: #fff;
+  border-color: rgba(255,255,255,0.7);
+}
+.flag-icon { font-size: 1rem; }
+
+/* ── Market Chart Filters ──────────────────────────────────── */
+.chart-filter-btn {
+  border-radius: 20px !important;
+  padding: 4px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.chart-filter-btn.active {
+  background: #2e7d32 !important;
+  color: #fff !important;
+  border-color: #2e7d32 !important;
+}
+.chart-type-btn {
+  border-radius: 8px !important;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+.chart-type-btn.active {
+  background: #1565c0 !important;
+  color: #fff !important;
+  border-color: #1565c0 !important;
+}

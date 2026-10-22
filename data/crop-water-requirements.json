@@ -1,0 +1,125 @@
+{
+  "_comment": "Crop seasonal and daily water requirements for Gujarat farming systems.",
+  "crops": {
+    "Cotton": {
+      "total_water_need_mm": "700 - 1200 mm",
+      "daily_water_need_mm": 4.5,
+      "irrigation_frequency_days": 6,
+      "critical_growth_period": "Boll formation to boll bursting",
+      "recommended_method": "Drip Irrigation",
+      "water_saving_with_drip_pct": 45
+    },
+    "Groundnut": {
+      "total_water_need_mm": "500 - 700 mm",
+      "daily_water_need_mm": 3.8,
+      "irrigation_frequency_days": 7,
+      "critical_growth_period": "Flowering, pegging and pod development",
+      "recommended_method": "Sprinkler / Drip",
+      "water_saving_with_drip_pct": 40
+    },
+    "Wheat": {
+      "total_water_need_mm": "450 - 650 mm",
+      "daily_water_need_mm": 3.5,
+      "irrigation_frequency_days": 8,
+      "critical_growth_period": "Crown root initiation (CRI), tillering, flowering, milking",
+      "recommended_method": "Sprinkler / Check Basin",
+      "water_saving_with_drip_pct": 35
+    },
+    "Bajra": {
+      "total_water_need_mm": "350 - 500 mm",
+      "daily_water_need_mm": 2.8,
+      "irrigation_frequency_days": 10,
+      "critical_growth_period": "Tillering and grain development",
+      "recommended_method": "Furrow / Sprinkler",
+      "water_saving_with_drip_pct": 35
+    },
+    "Maize": {
+      "total_water_need_mm": "500 - 800 mm",
+      "daily_water_need_mm": 4.2,
+      "irrigation_frequency_days": 6,
+      "critical_growth_period": "Tasseling and silking",
+      "recommended_method": "Drip / Furrow",
+      "water_saving_with_drip_pct": 40
+    },
+    "Castor": {
+      "total_water_need_mm": "500 - 700 mm",
+      "daily_water_need_mm": 3.6,
+      "irrigation_frequency_days": 8,
+      "critical_growth_period": "Spike development and capsule setting",
+      "recommended_method": "Drip / Furrow",
+      "water_saving_with_drip_pct": 45
+    },
+    "Cumin": {
+      "total_water_need_mm": "200 - 300 mm",
+      "daily_water_need_mm": 2.2,
+      "irrigation_frequency_days": 10,
+      "critical_growth_period": "Flowering and seed filling (avoid over-irrigation)",
+      "recommended_method": "Sprinkler (light) / Drip",
+      "water_saving_with_drip_pct": 50
+    },
+    "Mustard": {
+      "total_water_need_mm": "300 - 450 mm",
+      "daily_water_need_mm": 2.9,
+      "irrigation_frequency_days": 9,
+      "critical_growth_period": "Flowering and pod formation",
+      "recommended_method": "Sprinkler / Check Basin",
+      "water_saving_with_drip_pct": 35
+    },
+    "Paddy": {
+      "total_water_need_mm": "1200 - 2000 mm",
+      "daily_water_need_mm": 7.5,
+      "irrigation_frequency_days": 2,
+      "critical_growth_period": "Tillering, panicle initiation and flowering",
+      "recommended_method": "Alternate Wetting & Drying (AWD) / Flood",
+      "water_saving_with_drip_pct": 30
+    },
+    "Sesame": {
+      "total_water_need_mm": "300 - 400 mm",
+      "daily_water_need_mm": 2.5,
+      "irrigation_frequency_days": 10,
+      "critical_growth_period": "Flowering and capsule formation",
+      "recommended_method": "Drip / Furrow",
+      "water_saving_with_drip_pct": 40
+    },
+    "Chickpea": {
+      "total_water_need_mm": "250 - 400 mm",
+      "daily_water_need_mm": 2.6,
+      "irrigation_frequency_days": 12,
+      "critical_growth_period": "Pre-flowering and pod filling",
+      "recommended_method": "Sprinkler / Light Flooding",
+      "water_saving_with_drip_pct": 40
+    },
+    "Tomato": {
+      "total_water_need_mm": "600 - 800 mm",
+      "daily_water_need_mm": 4.8,
+      "irrigation_frequency_days": 4,
+      "critical_growth_period": "Flowering, fruit set and fruit sizing",
+      "recommended_method": "Drip with Fertigation",
+      "water_saving_with_drip_pct": 55
+    },
+    "Onion": {
+      "total_water_need_mm": "400 - 600 mm",
+      "daily_water_need_mm": 3.7,
+      "irrigation_frequency_days": 5,
+      "critical_growth_period": "Bulb development and enlargement",
+      "recommended_method": "Micro-sprinkler / Drip",
+      "water_saving_with_drip_pct": 45
+    },
+    "Sugarcane": {
+      "total_water_need_mm": "1500 - 2500 mm",
+      "daily_water_need_mm": 6.5,
+      "irrigation_frequency_days": 5,
+      "critical_growth_period": "Formative and grand growth stages",
+      "recommended_method": "Drip Irrigation",
+      "water_saving_with_drip_pct": 50
+    },
+    "Mango": {
+      "total_water_need_mm": "800 - 1200 mm",
+      "daily_water_need_mm": 3.5,
+      "irrigation_frequency_days": 8,
+      "critical_growth_period": "Fruit enlargement",
+      "recommended_method": "Drip / Basin",
+      "water_saving_with_drip_pct": 50
+    }
+  }
+}

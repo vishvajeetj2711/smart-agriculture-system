@@ -1,0 +1,31 @@
+{
+  "panel_watt": 400,
+  "panel_area_sqm": 2.0,
+  "panel_cost_inr": 25000,
+  "installation_cost_per_panel_inr": 5000,
+  "maintenance_annual_pct": 0.02,
+  "system_efficiency": 0.80,
+  "avg_sunlight_hours_india": {
+    "North India": 5.5,
+    "South India": 5.8,
+    "West India": 5.5,
+    "East India": 4.8,
+    "Central India": 5.5
+  },
+  "govt_rate_per_kwh_inr": 3.5,
+  "solar_subsidy_pct": 0.30,
+  "avg_crop_income_per_acre_inr": {
+    "Rice": 35000,
+    "Wheat": 30000,
+    "Maize": 25000,
+    "Cotton": 45000,
+    "Sugarcane": 80000,
+    "Soybean": 28000,
+    "Tomato": 60000,
+    "Onion": 55000,
+    "Groundnut": 30000,
+    "Vegetables": 50000,
+    "Other": 35000
+  },
+  "panels_per_acre": 200
+}

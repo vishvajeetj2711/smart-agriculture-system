@@ -1,0 +1,792 @@
+{% extends "base.html" %}
+{% block title %}Crop Recommendation — Smart Agriculture Gujarat{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ════ Hero ══════════════════════════════════════════════════════ */
+.crop-hero {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+  border-radius: 20px; overflow: hidden; position: relative; min-height: 110px;
+}
+.crop-hero-img {
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 44%; object-fit: cover; opacity: .5; border-radius: 0 20px 20px 0;
+}
+.crop-hero-overlay {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 44%;
+  background: linear-gradient(to right, #2e7d32, transparent);
+}
+
+/* ════ Form card ═════════════════════════════════════════════════ */
+.form-card { border-radius: 20px !important; box-shadow: 0 4px 24px rgba(46,125,50,.1) !important; border: none !important; }
+.form-card .card-header {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32) !important;
+  border-radius: 20px 20px 0 0 !important;
+  padding: 16px 22px;
+}
+
+/* ── Section dividers ─────────────────────────────────────────── */
+.sec-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 18px 0 10px;
+}
+.sec-divider .sd-icon {
+  width: 30px; height: 30px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 0.95rem;
+}
+.sec-divider .sd-title {
+  font-weight: 700; font-size: 0.8rem; color: #1b5e20;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.sec-divider .sd-line {
+  flex: 1; height: 1px; background: linear-gradient(to right, #c8e6c9, transparent);
+}
+/* colour variants */
+.sd-green  .sd-icon { background: #e8f5e9; }
+.sd-blue   .sd-icon { background: #e3f2fd; }
+.sd-orange .sd-icon { background: #fff3e0; }
+.sd-teal   .sd-icon { background: #e0f7fa; }
+.sd-purple .sd-icon { background: #f3e5f5; }
+.sd-green  .sd-title { color: #2e7d32; }
+.sd-blue   .sd-title { color: #1565c0; }
+.sd-orange .sd-title { color: #e65100; }
+.sd-teal   .sd-title { color: #00695c; }
+.sd-purple .sd-title { color: #6a1b9a; }
+.sd-green  .sd-line  { background: linear-gradient(to right, #c8e6c9, transparent); }
+.sd-blue   .sd-line  { background: linear-gradient(to right, #bbdefb, transparent); }
+.sd-orange .sd-line  { background: linear-gradient(to right, #ffe0b2, transparent); }
+.sd-teal   .sd-line  { background: linear-gradient(to right, #b2dfdb, transparent); }
+.sd-purple .sd-line  { background: linear-gradient(to right, #e1bee7, transparent); }
+
+/* ── Field box (dropdown / text) ──────────────────────────────── */
+.field-box {
+  background: #f8fdf8; border: 1.5px solid #dcedc8;
+  border-radius: 12px; padding: 8px 14px;
+  transition: border-color .15s;
+}
+.field-box:focus-within { border-color: #43a047; background: #f1f8f1; }
+.field-box label {
+  font-size: 0.72rem; color: #777; margin-bottom: 2px;
+  display: block; font-weight: 500;
+}
+.field-box .form-select,
+.field-box .form-control {
+  border: none; background: transparent; padding: 0;
+  font-weight: 600; font-size: 0.9rem; box-shadow: none; color: #1b5e20;
+}
+.field-box .form-select:focus,
+.field-box .form-control:focus { box-shadow: none; background: transparent; }
+
+/* ── Blue field box for water fields ─────────────────────────── */
+.field-box-blue {
+  background: #f0f7ff; border: 1.5px solid #bbdefb;
+  border-radius: 12px; padding: 8px 14px;
+  transition: border-color .15s;
+}
+.field-box-blue:focus-within { border-color: #1565c0; background: #e8f0fe; }
+.field-box-blue label {
+  font-size: 0.72rem; color: #5c7fb0; margin-bottom: 2px;
+  display: block; font-weight: 500;
+}
+.field-box-blue .form-select {
+  border: none; background: transparent; padding: 0;
+  font-weight: 600; font-size: 0.9rem; box-shadow: none; color: #1565c0;
+}
+.field-box-blue .form-select:focus { box-shadow: none; background: transparent; }
+
+/* ── Centered numeric box ─────────────────────────────────────── */
+.npk-box {
+  background: #f8fdf8; border: 1.5px solid #dcedc8;
+  border-radius: 12px; padding: 10px 10px; text-align: center;
+  transition: border-color .15s;
+}
+.npk-box:focus-within { border-color: #43a047; }
+.npk-box label { font-size: 0.7rem; color: #888; margin-bottom: 2px; display: block; }
+.npk-box input {
+  border: none; background: transparent; font-weight: 700;
+  font-size: 1.05rem; text-align: center; width: 100%;
+  padding: 0; box-shadow: none; color: #1b5e20;
+}
+.npk-box input:focus { outline: none; box-shadow: none; }
+
+/* ── pH rainbow slider ────────────────────────────────────────── */
+.ph-wrap {
+  background: #f8fdf8; border: 1.5px solid #dcedc8;
+  border-radius: 12px; padding: 10px 14px;
+}
+.ph-track {
+  height: 8px; border-radius: 4px;
+  background: linear-gradient(to right, #e53935 0%, #ffeb3b 35%, #43a047 60%, #1565c0 100%);
+  position: relative; margin: 8px 0 4px;
+}
+#phSlider {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 8px; background: transparent;
+  position: absolute; top: 0; left: 0; margin: 0; cursor: pointer;
+}
+#phSlider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+  background: #fff; border: 3px solid #2e7d32; box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+#phSlider::-moz-range-thumb {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fff; border: 3px solid #2e7d32;
+}
+.ph-badge {
+  background: #2e7d32; color: #fff; border-radius: 20px;
+  padding: 2px 10px; font-weight: 700; font-size: 0.85rem;
+}
+
+/* ── Texture bar ──────────────────────────────────────────────── */
+.texture-bar { height: 7px; border-radius: 4px; display: flex; overflow: hidden; }
+.tb-sand { background: #f9a825; }
+.tb-silt { background: #66bb6a; }
+.tb-clay { background: #ef5350; }
+.texture-legend { display: flex; gap: 10px; font-size: 0.68rem; margin-top: 5px; color: #666; }
+.tl-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 3px; }
+
+/* ── Submit button ────────────────────────────────────────────── */
+.submit-btn {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32) !important;
+  border: none !important; border-radius: 14px !important;
+  padding: 14px 20px; font-size: 1rem; letter-spacing: .2px;
+  box-shadow: 0 4px 14px rgba(46,125,50,.3) !important;
+  transition: opacity .15s, box-shadow .15s !important;
+}
+.submit-btn:hover {
+  opacity: .92;
+  box-shadow: 0 6px 20px rgba(46,125,50,.4) !important;
+}
+
+/* ════ Results panel ═════════════════════════════════════════════ */
+.result-outer {
+  border-radius: 20px !important;
+  box-shadow: 0 4px 24px rgba(46,125,50,.1) !important;
+  border: none !important;
+  overflow: hidden;
+}
+.result-header {
+  background: linear-gradient(135deg, #f0fdf4, #e8f5e9);
+  padding: 18px 22px; border-bottom: 1px solid #d1fae5;
+}
+
+/* Filter pills */
+.filter-badge {
+  background: #fff; color: #2e7d32;
+  border: 1.5px solid #c8e6c9; border-radius: 30px;
+  padding: 5px 14px; font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.filter-badge:hover, .filter-badge.active {
+  background: #2e7d32 !important; color: #fff !important;
+  border-color: #2e7d32 !important; box-shadow: 0 3px 10px rgba(46,125,50,.25) !important;
+}
+
+/* Crop cards horizontal row */
+.crop-cards-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; }
+.crop-cards-row::-webkit-scrollbar { height: 5px; }
+.crop-cards-row::-webkit-scrollbar-thumb { background: #a5d6a7; border-radius: 3px; }
+
+.crop-card {
+  min-width: 160px; max-width: 170px; border-radius: 16px !important;
+  border: 2px solid #e8f5e9 !important; flex-shrink: 0;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  overflow: hidden;
+}
+.crop-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 28px rgba(46,125,50,.2) !important;
+  border-color: #43a047 !important;
+}
+.crop-card.best-match {
+  border-color: #2e7d32 !important;
+  box-shadow: 0 5px 18px rgba(46,125,50,.22) !important;
+}
+.crop-img { width: 100%; height: 115px; object-fit: cover; }
+.crop-img-placeholder {
+  width: 100%; height: 115px;
+  display: flex; align-items: center; justify-content: center; font-size: 3rem;
+}
+.profit-badge {
+  font-size: 0.68rem; font-weight: 700; border-radius: 20px; padding: 3px 9px;
+}
+.profit-high   { background: #e8f5e9; color: #1b5e20; }
+.profit-medium { background: #e3f2fd; color: #1565c0; }
+.profit-stable { background: #fff8e1; color: #e65100; }
+.profit-value  { background: #fce4ec; color: #c62828; }
+.profit-low    { background: #f3e5f5; color: #6a1b9a; }
+
+.crop-conf-bar { height: 5px; border-radius: 3px; background: #e8f5e9; margin: 5px 0; }
+.crop-conf-bar .bar-fill { height: 100%; border-radius: 3px; background: #43a047; }
+.crop-detail-line { font-size: 0.72rem; color: #666; display: flex; align-items: center; gap: 4px; margin-top: 3px; }
+.crop-detail-line i { color: #43a047; font-size: 0.68rem; }
+
+/* Summary tiles */
+.sum-tile { border-radius: 10px; padding: 7px 5px; text-align: center; }
+.sum-tile .sv { font-weight: 700; display: block; font-size: 0.82rem; color: #1b5e20; }
+.sum-tile .sl { color: #999; font-size: 0.62rem; display: block; margin-top: 1px; }
+
+/* Placeholder state */
+.placeholder-state {
+  background: linear-gradient(135deg, #f1f8f2, #e8f5e9);
+  border-radius: 20px; border: 2px dashed #c8e6c9; padding: 50px 24px; text-align: center;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 py-3">
+
+  <!-- ── Hero Banner ─────────────────────────────────────────── -->
+  <div class="crop-hero mb-4 p-4 d-flex align-items-center justify-content-between">
+    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=70"
+         class="crop-hero-img" alt="Gujarat Farm">
+    <div class="crop-hero-overlay"></div>
+    <div style="position:relative;z-index:2">
+      <div class="d-flex align-items-center gap-3">
+        <span style="font-size:2.4rem">🌱</span>
+        <div>
+          <h2 class="text-white fw-bold mb-0" style="font-size:1.65rem;letter-spacing:-.3px">
+            Crop Recommendation
+          </h2>
+          <p class="mb-0" style="color:rgba(255,255,255,.72);font-size:0.85rem">
+            Enter soil, texture &amp; water details — AI suggests the best Gujarat crop.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-md-block text-end" style="position:relative;z-index:2;min-width:160px">
+      <div style="font-size:1.0rem;font-weight:700;color:rgba(255,255,255,.88);line-height:1.7">
+        Smart Farming,<br>Prosperous Gujarat
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- ════════════════════════════════════════════════════════
+         LEFT — FORM
+    ════════════════════════════════════════════════════════ -->
+    <div class="col-lg-5 col-xl-4">
+      <div class="card form-card">
+
+        <!-- Card header -->
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2 text-white fw-bold">
+            <i class="bi bi-sliders2 fs-5"></i>
+            <div>
+              <div style="font-size:0.95rem">Farm Data Entry</div>
+              <div style="font-size:0.68rem;opacity:.75;font-weight:400">Fill all fields for best accuracy</div>
+            </div>
+          </div>
+          <span class="text-white d-flex align-items-center gap-1"
+                style="font-size:0.72rem;background:rgba(255,255,255,.15);border-radius:20px;padding:4px 10px">
+            <i class="bi bi-stars"></i> AI Powered
+          </span>
+        </div>
+
+        <div class="card-body px-3 pt-2 pb-3">
+          <form method="POST" action="{{ url_for('crop') }}" id="cropForm">
+
+            <!-- ══════════════════════════════════════════════
+                 SECTION 1 — BASIC INFORMATION
+                 (Soil Type, Season + Water & Irrigation)
+            ══════════════════════════════════════════════ -->
+            <div class="sec-divider sd-green">
+              <div class="sd-icon">📋</div>
+              <span class="sd-title">Basic Information</span>
+              <div class="sd-line"></div>
+            </div>
+
+            <!-- Soil Type + Season -->
+            <div class="row g-2 mb-2">
+              <div class="col-6">
+                <div class="field-box">
+                  <label>Soil Type</label>
+                  <select class="form-select" name="soil_type" required>
+                    <option value="">Select...</option>
+                    <option value="Black">Black Soil</option>
+                    <option value="Sandy Loam">Sandy Loam</option>
+                    <option value="Loamy">Loamy</option>
+                    <option value="Clayey">Clayey</option>
+                    <option value="Red">Red Soil</option>
+                    <option value="Alluvial">Alluvial</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="field-box">
+                  <label>Season</label>
+                  <select class="form-select" name="season" required>
+                    <option value="">Select...</option>
+                    <option value="Kharif">Kharif (Jun–Nov)</option>
+                    <option value="Rabi">Rabi (Nov–Apr)</option>
+                    <option value="Zaid">Zaid (Mar–Jun)</option>
+                    <option value="Annual">Annual</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Water & Irrigation (merged into Basic Information) -->
+            <div class="row g-2 mb-2">
+              <div class="col-6">
+                <div class="field-box-blue">
+                  <label>Irrigation Available</label>
+                  <select class="form-select" name="irrigation_available">
+                    <option value="Yes">✅ Yes</option>
+                    <option value="No">❌ No (Rainfed)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="field-box-blue">
+                  <label>Water Source</label>
+                  <select class="form-select" name="water_source">
+                    <option value="Borewell">🔩 Borewell</option>
+                    <option value="Canal">🌊 Canal</option>
+                    <option value="Well">🪣 Open Well</option>
+                    <option value="River">🏞️ River / Dam</option>
+                    <option value="Rainfed">🌧️ Rainfed Only</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-2 mb-2">
+              <div class="col-6">
+                <div class="field-box-blue">
+                  <label>Water Availability</label>
+                  <select class="form-select" name="water_availability">
+                    <option value="High">🟢 High</option>
+                    <option value="Medium" selected>🟡 Medium</option>
+                    <option value="Low">🔴 Low</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="field-box-blue">
+                  <label>Irrigation Type</label>
+                  <select class="form-select" name="irrigation_type">
+                    <option value="Drip">💧 Drip</option>
+                    <option value="Sprinkler">🌀 Sprinkler</option>
+                    <option value="Flood" selected>🌊 Flood</option>
+                    <option value="Furrow">〰️ Furrow</option>
+                    <option value="None">⛔ None</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <div class="field-box-blue">
+                <label>Water Salinity / Quality</label>
+                <select class="form-select" name="water_salinity">
+                  <option value="Normal">💧 Normal (Good Quality)</option>
+                  <option value="Slightly Saline">⚠️ Slightly Saline</option>
+                  <option value="High">🔴 High Salinity</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- ══════════════════════════════════════════════
+                 SECTION 2 — SOIL NUTRIENTS
+            ══════════════════════════════════════════════ -->
+            <div class="sec-divider sd-green mt-1">
+              <div class="sd-icon">🌿</div>
+              <span class="sd-title">Soil Nutrients (kg/ha)</span>
+              <div class="sd-line"></div>
+            </div>
+
+            <div class="row g-2 mb-2">
+              <div class="col-4">
+                <div class="npk-box">
+                  <label>N – Nitrogen</label>
+                  <input type="number" name="nitrogen" min="0" max="200" placeholder="90" required>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="npk-box">
+                  <label>P – Phosphorus</label>
+                  <input type="number" name="phosphorus" min="0" max="150" placeholder="45" required>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="npk-box">
+                  <label>K – Potassium</label>
+                  <input type="number" name="potassium" min="0" max="250" placeholder="45" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Organic Carbon -->
+            <div class="npk-box mb-2">
+              <label>Organic Carbon (%)  —  typical range 0.3 – 1.5</label>
+              <input type="number" name="organic_carbon" min="0.1" max="5.0" step="0.1" placeholder="0.5">
+            </div>
+
+            <!-- ── pH slider ──────────────────────────────── -->
+            <div class="ph-wrap mb-2">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span style="font-size:0.75rem;font-weight:700;color:#2e7d32">⚗️ Soil pH</span>
+                <span class="ph-badge" id="phDisplay">7.0</span>
+              </div>
+              <div class="ph-track" style="position:relative">
+                <input type="range" id="phSlider" name="ph"
+                       min="4.0" max="9.0" step="0.1" value="7.0"
+                       oninput="document.getElementById('phDisplay').textContent=parseFloat(this.value).toFixed(1)">
+              </div>
+              <div class="d-flex justify-content-between mt-1" style="font-size:0.68rem;color:#aaa">
+                <span>4.0 Acidic</span><span>7.0 Neutral</span><span>9.0 Alkaline</span>
+              </div>
+            </div>
+
+            <!-- ══════════════════════════════════════════════
+                 SECTION 3 — SOIL TEXTURE
+            ══════════════════════════════════════════════ -->
+            <div class="sec-divider sd-orange">
+              <div class="sd-icon">🏖️</div>
+              <span class="sd-title">Soil Texture (%)</span>
+              <div class="sd-line"></div>
+            </div>
+
+            <div class="row g-2 mb-1">
+              <div class="col-4">
+                <div class="npk-box">
+                  <label>Sand %</label>
+                  <input type="number" name="sand_pct" id="sandPct" min="0" max="100"
+                         placeholder="33" oninput="updateTexture()" required>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="npk-box">
+                  <label>Silt %</label>
+                  <input type="number" name="silt_pct" id="siltPct" min="0" max="100"
+                         placeholder="33" oninput="updateTexture()" required>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="npk-box">
+                  <label>Clay %</label>
+                  <input type="number" name="clay_pct" id="clayPct" min="0" max="100"
+                         placeholder="34" oninput="updateTexture()" required>
+                </div>
+              </div>
+            </div>
+            <!-- Texture visual bar -->
+            <div class="px-1 mb-2">
+              <div class="texture-bar" id="textureBar">
+                <div class="tb-sand" id="tbSand" style="width:33%"></div>
+                <div class="tb-silt" id="tbSilt" style="width:33%"></div>
+                <div class="tb-clay" id="tbClay" style="width:34%"></div>
+              </div>
+              <div class="texture-legend">
+                <span><span class="tl-dot" style="background:#f9a825"></span>Sand</span>
+                <span><span class="tl-dot" style="background:#66bb6a"></span>Silt</span>
+                <span><span class="tl-dot" style="background:#ef5350"></span>Clay</span>
+                <span id="textureSumMsg" class="ms-auto" style="font-size:0.68rem"></span>
+              </div>
+            </div>
+
+            <!-- ══════════════════════════════════════════════
+                 SECTION 4 — RAINFALL
+            ══════════════════════════════════════════════ -->
+            <div class="sec-divider sd-blue">
+              <div class="sd-icon">🌧️</div>
+              <span class="sd-title">Rainfall</span>
+              <div class="sd-line"></div>
+            </div>
+
+            <div class="npk-box mb-3">
+              <label>Average Annual Rainfall (mm)</label>
+              <input type="number" name="rainfall" min="0" max="2000" placeholder="600" required>
+            </div>
+
+            <!-- ── Submit ──────────────────────────────────── -->
+            <button type="submit"
+                    class="btn btn-success submit-btn w-100 fw-bold text-white d-flex align-items-center justify-content-center gap-2">
+              <i class="bi bi-stars fs-5"></i>
+              <div>
+                <div style="font-size:1rem;letter-spacing:.1px">Get AI Recommendation</div>
+                <div style="font-size:0.72rem;opacity:.8;font-weight:400">Powered by Machine Learning</div>
+              </div>
+              <i class="bi bi-arrow-right-circle fs-4 ms-auto"></i>
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         RIGHT — RESULTS
+    ════════════════════════════════════════════════════════ -->
+    <div class="col-lg-7 col-xl-8">
+
+      {% if result and result.success %}
+      <div class="card result-outer">
+
+        <!-- Result header -->
+        <div class="result-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <div class="d-flex align-items-center gap-2">
+            <div style="width:40px;height:40px;background:#2e7d32;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">
+              🌱
+            </div>
+            <div>
+              <h5 class="fw-bold mb-0" style="color:#1b5e20">Recommended Crops</h5>
+              <p class="mb-0 text-muted" style="font-size:0.78rem">
+                Based on your soil, texture and water profile — most suitable for Gujarat.
+              </p>
+            </div>
+          </div>
+          <span style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:20px;padding:4px 12px;font-size:0.75rem;color:#2e7d32;font-weight:600">
+            <i class="bi bi-cpu-fill me-1"></i>AI Analysis Complete
+          </span>
+        </div>
+
+        <div class="card-body p-3">
+
+          <!-- AI info bar -->
+          <div class="d-flex align-items-start gap-2 mb-3 p-2 rounded-3"
+               style="background:#f0fdf4;border:1px solid #bbf7d0">
+            <div style="background:#2e7d32;border-radius:10px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">
+              🤖
+            </div>
+            <div style="font-size:0.8rem;color:#374151;padding-top:3px">
+              Analysed: soil nutrients, organic carbon, texture (Sand/Silt/Clay),
+              pH, rainfall, irrigation type, water source and salinity.
+            </div>
+          </div>
+
+          <!-- Filter badges -->
+          <div class="d-flex gap-2 flex-wrap mb-3">
+            <button class="filter-badge active" onclick="filterCrops('all',this)">🌱 Soil Fit</button>
+            <button class="filter-badge" onclick="filterCrops('climate',this)">☀️ Climate Fit</button>
+            <button class="filter-badge" onclick="filterCrops('market',this)">📈 Market Demand</button>
+            <button class="filter-badge" onclick="filterCrops('water',this)">💧 Water Need</button>
+          </div>
+
+          <!-- Crop cards -->
+          <div class="crop-cards-row">
+            {% set crop_images = {
+              'Cotton':    'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/CottonPlant.JPG/320px-CottonPlant.JPG',
+              'Groundnut': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Arachis_hypogaea_MS_3880.jpg/320px-Arachis_hypogaea_MS_3880.jpg',
+              'Castor':    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Ricinus_communis_2.jpg/320px-Ricinus_communis_2.jpg',
+              'Cumin':     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Cumin_seeds.jpg/320px-Cumin_seeds.jpg',
+              'Bajra':     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Pennisetum_glaucum_NPGR.jpg/320px-Pennisetum_glaucum_NPGR.jpg',
+              'Wheat':     'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Campowheat.jpg/320px-Campowheat.jpg',
+              'Rice':      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Rice_paddy_cat.jpg/320px-Rice_paddy_cat.jpg',
+              'Maize':     'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Corncobs.jpg/320px-Corncobs.jpg',
+              'Sugarcane': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Sugar_cane_Lom_Plai_2.jpg/320px-Sugar_cane_Lom_Plai_2.jpg',
+              'Tomato':    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/320px-Tomato_je.jpg',
+              'Onion':     'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Onion_on_white_background.jpg/320px-Onion_on_white_background.jpg',
+              'Mango':     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hapus_Mango.jpg/320px-Hapus_Mango.jpg',
+            } %}
+            {% set profit_map = {
+              'Cotton':'High Profit','Groundnut':'Good Profit','Castor':'Stable Demand',
+              'Cumin':'High Value','Bajra':'Low Water','Wheat':'Govt MSP',
+              'Rice':'High Demand','Maize':'Feed Crop','Sugarcane':'Long Term',
+              'Tomato':'Quick Return','Onion':'Export','Mango':'Premium'
+            } %}
+            {% set profit_cls = {
+              'High Profit':'profit-high','Good Profit':'profit-medium','Stable Demand':'profit-stable',
+              'High Value':'profit-value','Low Water':'profit-low','Govt MSP':'profit-medium',
+              'High Demand':'profit-high','Feed Crop':'profit-stable','Long Term':'profit-stable',
+              'Quick Return':'profit-high','Export':'profit-value','Premium':'profit-value'
+            } %}
+
+            {% for rec in result.recommendations %}
+            {% set ptext = profit_map.get(rec.crop, 'Good Choice') %}
+            {% set pcls  = profit_cls.get(ptext, 'profit-stable') %}
+            {% set img   = crop_images.get(rec.crop, '') %}
+
+            <div class="crop-card card {% if loop.first %}best-match{% endif %}">
+              {% if loop.first %}
+              <div style="background:#2e7d32;color:#fff;font-size:0.62rem;font-weight:800;
+                          text-align:center;padding:3px;letter-spacing:.4px">
+                ⭐ BEST MATCH
+              </div>
+              {% endif %}
+
+              {% if img %}
+              <img src="{{ img }}" class="crop-img" alt="{{ rec.crop }}"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="crop-img-placeholder" style="display:none;background:#e8f5e9">{{ rec.icon }}</div>
+              {% else %}
+              <div class="crop-img-placeholder" style="background:#e8f5e9">{{ rec.icon }}</div>
+              {% endif %}
+
+              <div class="card-body p-2">
+                <div class="d-flex align-items-start justify-content-between gap-1 mb-1">
+                  <h6 class="fw-bold mb-0" style="font-size:0.9rem;color:#1b5e20">{{ rec.crop }}</h6>
+                  <span class="profit-badge {{ pcls }} flex-shrink-0">{{ ptext }}</span>
+                </div>
+
+                <!-- Confidence bar -->
+                <div class="d-flex align-items-center gap-1 mb-2">
+                  <div class="crop-conf-bar flex-grow-1">
+                    <div class="bar-fill" style="width:{{ rec.confidence }}%"></div>
+                  </div>
+                  <span style="font-size:0.62rem;color:#888;white-space:nowrap">{{ rec.confidence }}%</span>
+                </div>
+
+                <div class="crop-detail-line">
+                  <i class="bi bi-calendar3"></i>
+                  {{ rec.season|join(', ') if rec.season is iterable and rec.season is not string else rec.season }}
+                </div>
+                <div class="crop-detail-line">
+                  <i class="bi bi-droplet-fill"></i>Water: {{ rec.water }}
+                </div>
+                <p style="font-size:0.68rem;color:#777;margin-top:5px;margin-bottom:0;line-height:1.4">
+                  {{ rec.description }}
+                </p>
+                <div class="mt-2 pt-2 border-top">
+                  <a href="{{ url_for('irrigation') }}?crop={{ rec.crop }}&soil={{ result.input_summary.soil_type }}&water_avail={{ result.input_summary.water_avail }}&method={{ result.input_summary.irr_type }}&analyze=1"
+                     class="btn btn-sm btn-outline-primary w-100 rounded-pill py-1" style="font-size: 0.72rem; font-weight: 600">
+                    <i class="bi bi-droplet-half me-1"></i>Plan Irrigation →
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Input summary -->
+          <div class="mt-3 rounded-3 p-3" style="background:#f8fdf8;border:1px solid #e8f5e9">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-clipboard-data text-success"></i>
+              <span style="font-size:0.72rem;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.4px">
+                Your Input Summary
+              </span>
+            </div>
+            <!-- Soil row -->
+            <div class="row g-1 mb-1">
+              {% for lbl, val, bg in [
+                ('N',     result.input_summary.N,              '#e8f5e9'),
+                ('P',     result.input_summary.P,              '#fff8e1'),
+                ('K',     result.input_summary.K,              '#e8f5e9'),
+                ('OC %',  result.input_summary.organic_carbon, '#f3e5f5'),
+                ('pH',    result.input_summary.ph,             '#e3f2fd'),
+                ('Soil',  result.input_summary.soil_type,      '#fce4ec'),
+                ('Season',result.input_summary.season,         '#fff3e0'),
+              ] %}
+              <div class="col">
+                <div class="sum-tile" style="background:{{ bg }}">
+                  <span class="sv">{{ val }}</span>
+                  <span class="sl">{{ lbl }}</span>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- Water row -->
+            <div class="row g-1">
+              {% for lbl, val in [
+                ('Irr.',    result.input_summary.irrigation),
+                ('Source',  result.input_summary.water_source),
+                ('Water',   result.input_summary.water_avail),
+                ('Irr.Type',result.input_summary.irr_type),
+                ('Salinity',result.input_summary.salinity),
+                ('Texture', result.input_summary.texture),
+              ] %}
+              <div class="col-6 col-md-4 col-lg-2">
+                <div class="sum-tile" style="background:#e8f0fe">
+                  <span class="sv" style="font-size:0.72rem;color:#1565c0">{{ val }}</span>
+                  <span class="sl">{{ lbl }}</span>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {% elif result and not result.success %}
+      <div class="alert alert-danger rounded-4">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ result.error }}
+      </div>
+
+      {% else %}
+      <!-- Placeholder -->
+      <div class="placeholder-state">
+        <div style="font-size:4rem;margin-bottom:16px">🌱</div>
+        <h5 class="fw-semibold mb-2" style="color:#2e7d32">Fill the form to get AI Crop Recommendation</h5>
+        <p class="text-muted small mb-4">
+          Our model analyses soil nutrients, organic carbon, texture, pH, rainfall
+          and your complete water &amp; irrigation profile to suggest the best Gujarat crop.
+        </p>
+        <div class="row g-3 justify-content-center mb-4">
+          {% for name, icon, pcls, ptext in [
+            ('Cotton',   '🌸','profit-high',  'High Profit'),
+            ('Groundnut','🥜','profit-medium','Good Profit'),
+            ('Castor',   '🫘','profit-stable','Stable Demand'),
+            ('Cumin',    '🌿','profit-value', 'High Value'),
+            ('Bajra',    '🌱','profit-low',   'Low Water'),
+          ] %}
+          <div class="col-auto">
+            <div class="card border-0 shadow-sm"
+                 style="border-radius:14px;min-width:105px;border:2px solid #e8f5e9 !important">
+              <div class="card-body text-center p-3">
+                <div style="font-size:1.9rem">{{ icon }}</div>
+                <div class="fw-bold small mt-1" style="color:#1b5e20">{{ name }}</div>
+                <span class="profit-badge {{ pcls }} d-inline-block mt-1">{{ ptext }}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="d-flex gap-2 justify-content-center flex-wrap">
+          <span class="filter-badge">🌱 Soil Fit</span>
+          <span class="filter-badge">☀️ Climate Fit</span>
+          <span class="filter-badge">📈 Market Demand</span>
+          <span class="filter-badge">💧 Water Need</span>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+/* Texture bar live update */
+function updateTexture() {
+  const s  = parseFloat(document.getElementById('sandPct').value) || 0;
+  const si = parseFloat(document.getElementById('siltPct').value) || 0;
+  const c  = parseFloat(document.getElementById('clayPct').value) || 0;
+  const total = s + si + c;
+  if (total > 0) {
+    document.getElementById('tbSand').style.width = (s  / total * 100) + '%';
+    document.getElementById('tbSilt').style.width = (si / total * 100) + '%';
+    document.getElementById('tbClay').style.width = (c  / total * 100) + '%';
+  }
+  const msg = document.getElementById('textureSumMsg');
+  if (total === 0) {
+    msg.textContent = '';
+  } else if (Math.abs(total - 100) < 1) {
+    msg.textContent = '✅ Total = 100%';
+    msg.style.color = '#2e7d32';
+  } else {
+    msg.textContent = `Total = ${total.toFixed(0)}% (must be 100)`;
+    msg.style.color = '#e53935';
+  }
+}
+
+/* Filter badge click */
+function filterCrops(type, btn) {
+  document.querySelectorAll('.filter-badge').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* Submit spinner */
+document.getElementById('cropForm')?.addEventListener('submit', function () {
+  const btn = this.querySelector('button[type="submit"]');
+  if (!btn) return;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analysing farm data...';
+  btn.disabled  = true;
+});
+</script>
+{% endblock %}

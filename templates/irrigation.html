@@ -1,0 +1,1168 @@
+{% extends "base.html" %}
+{% block title %}Smart Irrigation & Water Management — Smart Agriculture Gujarat{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ════════════════════════════════════════════════════════════
+   SMART IRRIGATION STYLES
+════════════════════════════════════════════════════════════ */
+.irr-hero {
+  background: linear-gradient(135deg, #0d47a1 0%, #0277bd 50%, #00838f 100%);
+  border-radius: 22px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: 24px 28px;
+}
+.irr-hero::before {
+  content: "💧";
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 5.5rem;
+  opacity: 0.15;
+}
+
+/* ── Status Banners ─────────────────────────────────────────── */
+.status-banner {
+  border-radius: 18px;
+  padding: 20px 24px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+.status-banner.status-HIGH {
+  background: linear-gradient(135deg, #b71c1c 0%, #c62828 55%, #d32f2f 100%);
+}
+.status-banner.status-MEDIUM {
+  background: linear-gradient(135deg, #e65100 0%, #ef6c00 55%, #f57c00 100%);
+}
+.status-banner.status-LOW {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 55%, #388e3c 100%);
+}
+.status-banner.status-WAIT {
+  background: linear-gradient(135deg, #01579b 0%, #0277bd 55%, #0288d1 100%);
+}
+.status-banner.status-NO_IRRIGATION {
+  background: linear-gradient(135deg, #37474f 0%, #455a64 55%, #546e7a 100%);
+}
+
+/* ── Result Stat Card ────────────────────────────────────────── */
+.res-stat-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  height: 100%;
+}
+.res-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.res-stat-icon { font-size: 1.8rem; margin-bottom: 4px; display: block; }
+.res-stat-val  { font-size: 1.35rem; font-weight: 700; }
+.res-stat-lbl  { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.4px; color: #666; font-weight: 600; margin-top: 2px; }
+
+/* ── Moisture Range Bar ─────────────────────────────────────── */
+.moisture-track {
+  height: 14px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #e53935 0%, #ff9800 30%, #4caf50 65%, #2196f3 100%);
+  position: relative;
+  margin-top: 8px;
+  margin-bottom: 22px;
+}
+.moisture-pointer {
+  position: absolute;
+  top: -8px;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 30px;
+  background: #212121;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: left 0.2s ease;
+}
+
+/* ── Weather Mini Card ──────────────────────────────────────── */
+.weather-mini-box {
+  background: linear-gradient(135deg, #0a2342 0%, #1565c0 100%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 18px 20px;
+}
+.w-stat-pill {
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  padding: 8px 10px;
+  text-align: center;
+}
+
+/* ── Quick Test Scenario Pills ──────────────────────────────── */
+.test-scenario-btn {
+  border-radius: 30px !important;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: 1.5px solid #d0d7de;
+  background: #f8fafc;
+  color: #334155;
+}
+.test-scenario-btn:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+/* ── AI Advice Box ──────────────────────────────────────────── */
+.ai-advice-card {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+/* ── Accordion Viva details ─────────────────────────────────── */
+.viva-accordion .accordion-button {
+  background: #f8fbf8;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #1b5e20;
+  border-radius: 12px !important;
+}
+.viva-accordion .accordion-button:not(.collapsed) {
+  background: #e8f5e9;
+  color: #1b5e20;
+  box-shadow: none;
+}
+.viva-accordion .accordion-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px !important;
+  overflow: hidden;
+}
+
+/* ── Form Labels & Icons ────────────────────────────────────── */
+.field-legend {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #0d47a1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 py-3">
+
+  <!-- ── Hero Banner ─────────────────────────────────────────── -->
+  <div class="irr-hero mb-4 shadow-sm">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="badge bg-white text-primary fw-bold px-3 py-1 rounded-pill">
+            <i class="bi bi-droplet-half me-1"></i>Gujarat Smart Farming
+          </span>
+          <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill">
+            <i class="bi bi-cpu-fill me-1"></i>Deterministic Decision Engine
+          </span>
+        </div>
+        <h2 class="fw-bold mb-1" style="font-size: 1.8rem">
+          💧 Smart Irrigation &amp; Water Management
+        </h2>
+        <p class="mb-0 opacity-85 small" style="max-width: 650px">
+          Intelligent agronomic water calculation based on crop thresholds, growth stage, soil type, 
+          real-time soil moisture and OpenWeatherMap rain forecast for Gujarat agriculture.
+        </p>
+      </div>
+
+      <div class="d-flex gap-2 align-items-center">
+        <button class="btn btn-light btn-sm fw-bold px-3 rounded-pill shadow-sm"
+                onclick="document.getElementById('historySection').scrollIntoView({behavior:'smooth'})">
+          <i class="bi bi-clock-history me-1 text-primary"></i>View History
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Top Usage & Metrics Summary Row ──────────────────────── -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="res-stat-card border-primary border-opacity-25">
+        <span class="res-stat-icon text-primary">🚰</span>
+        <div class="res-stat-val text-primary" id="sumWaterVal">
+          {% if result and result.estimated_water_L > 0 %}{{ '{:,}'.format(result.estimated_water_L) }} L{% elif result %}0 L{% else %}—{% endif %}
+        </div>
+        <div class="res-stat-lbl">Estimated Applied Water</div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="res-stat-card">
+        <span class="res-stat-icon text-danger">⚡</span>
+        <div class="res-stat-val {% if result and result.status=='HIGH' %}text-danger{% elif result and result.status=='MEDIUM' %}text-warning{% elif result and result.status=='WAIT' %}text-info{% elif result %}text-success{% else %}text-muted{% endif %}" id="sumStressVal">
+          {% if result %}{{ result.water_stress }}{% else %}Ready{% endif %}
+        </div>
+        <div class="res-stat-lbl">Water Stress Level</div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="res-stat-card">
+        <span class="res-stat-icon text-info">💧</span>
+        <div class="res-stat-val text-dark" id="sumMoistVal">
+          {{ form_values.soil_moisture }}%
+        </div>
+        <div class="res-stat-lbl">Current Soil Moisture</div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="res-stat-card">
+        <span class="res-stat-icon text-success">🌧️</span>
+        <div class="res-stat-val text-success" id="sumRainVal">
+          {{ form_values.rain_prob }}% ({{ form_values.expected_rainfall }} mm)
+        </div>
+        <div class="res-stat-lbl">Rain Probability &amp; Volume</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Main Grid ────────────────────────────────────────────── -->
+  <div class="row g-4">
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEFT COLUMN — Farm Info Form & Weather
+    ══════════════════════════════════════════════════════════ -->
+    <div class="col-lg-5 col-xl-5">
+
+      <!-- ── Current Weather Card (Reusing Weather Module) ────── -->
+      <div class="weather-mini-box shadow-sm mb-4">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-cloud-sun-fill text-warning fs-4"></i>
+            <div>
+              <div class="fw-bold small">Live Weather Forecast</div>
+              <small class="opacity-75" id="weatherCityLabel">
+                <i class="bi bi-geo-alt-fill me-1"></i>{{ form_values.city }}, Gujarat
+              </small>
+            </div>
+          </div>
+          <!-- City Switcher -->
+          <select class="form-select form-select-sm text-dark fw-semibold"
+                  id="citySelect" style="width: auto; max-width: 140px; border-radius: 10px"
+                  onchange="switchCityWeather(this.value)">
+            {% for c in cities %}
+            <option value="{{ c }}" {% if form_values.city == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="row g-2">
+          <div class="col-3">
+            <div class="w-stat-pill">
+              <div class="small opacity-75">Temp</div>
+              <div class="fw-bold fs-6" id="dispTemp">{{ form_values.weather_temp }}°C</div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="w-stat-pill">
+              <div class="small opacity-75">Humidity</div>
+              <div class="fw-bold fs-6" id="dispHum">{{ form_values.weather_humidity }}%</div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="w-stat-pill">
+              <div class="small opacity-75">Rain Prob</div>
+              <div class="fw-bold fs-6 text-warning" id="dispRainProb">{{ form_values.rain_prob }}%</div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="w-stat-pill">
+              <div class="small opacity-75">Expected</div>
+              <div class="fw-bold fs-6" id="dispExpRain">{{ form_values.expected_rainfall }} mm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Quick Test Scenario Presets (Viva / Demo Helper) ── -->
+      <div class="card border-0 shadow-sm mb-4 rounded-4" style="background:#f8fafc; border: 1px dashed #cbd5e1 !important">
+        <div class="card-body p-3">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <small class="fw-bold text-muted text-uppercase" style="letter-spacing:.4px; font-size: 0.72rem">
+              <i class="bi bi-magic me-1 text-primary"></i>1-Click Test Scenarios (Viva / Demo)
+            </small>
+          </div>
+          <div class="d-flex gap-1 flex-wrap">
+            <button type="button" class="test-scenario-btn" onclick="applyTestScenario(1)" title="Cotton 20% moist, 10% rain">
+              🔴 Test 1: High Stress
+            </button>
+            <button type="button" class="test-scenario-btn" onclick="applyTestScenario(2)" title="Cotton 55% moist, 20% rain">
+              🟢 Test 2: Normal
+            </button>
+            <button type="button" class="test-scenario-btn" onclick="applyTestScenario(3)" title="Cotton 30% moist, 85% rain (15mm)">
+              🔵 Test 3: Heavy Rain
+            </button>
+            <button type="button" class="test-scenario-btn" onclick="applyTestScenario(4)" title="Cotton 85% moisture">
+              ⚪ Test 4: Saturated
+            </button>
+            <button type="button" class="test-scenario-btn" onclick="applyTestScenario(5)" title="Wheat 22% moisture">
+              🌾 Test 5: Wheat
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Farm Details Input Form ─────────────────────────── -->
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-header bg-white border-bottom py-3 px-4 rounded-top-4">
+          <div class="d-flex align-items-center gap-2">
+            <span class="fs-5">🌾</span>
+            <h5 class="fw-bold mb-0 text-dark">Farm &amp; Soil Parameters</h5>
+          </div>
+        </div>
+
+        <div class="card-body p-4">
+          <form id="irrigationForm" method="POST" action="{{ url_for('irrigation') }}">
+
+            <!-- Hidden Weather Inputs -->
+            <input type="hidden" name="city" id="inputCity" value="{{ form_values.city }}">
+            <input type="hidden" name="weather_temp" id="inputTemp" value="{{ form_values.weather_temp }}">
+            <input type="hidden" name="weather_humidity" id="inputHum" value="{{ form_values.weather_humidity }}">
+            <input type="hidden" name="rain_prob" id="inputRainProb" value="{{ form_values.rain_prob }}">
+            <input type="hidden" name="expected_rainfall" id="inputExpRain" value="{{ form_values.expected_rainfall }}">
+            <input type="hidden" name="wind_speed" id="inputWindSpeed" value="{{ form_values.wind_speed }}">
+
+            <!-- Crop & Growth Stage -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-flower1 text-success me-1"></i>Select Crop
+              </label>
+              <select class="form-select form-select-lg fw-semibold" name="crop" id="cropSelect" required onchange="onCropChange(this.value)">
+                {% for c, d in crops_config.items() %}
+                <option value="{{ c }}" {% if form_values.crop == c %}selected{% endif %}>
+                  {{ d.icon }} {{ c }} ({{ d.gujarati }})
+                </option>
+                {% endfor %}
+              </select>
+              <div class="form-text small text-muted" id="cropConfigSummary">
+                Optimal moisture range: 50% - 65% · Base: 25,000 L/Acre
+              </div>
+            </div>
+
+            <!-- Growth Stage -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                <i class="bi bi-graph-up-arrow text-primary me-1"></i>Crop Growth Stage
+              </label>
+              <select class="form-select" name="growth_stage" id="growthStageSelect" required>
+                {% for stage, icon, factor in [
+                  ('Seedling',   '🌱', '0.8x (Low water need)'),
+                  ('Vegetative', '🌿', '1.0x (Standard)'),
+                  ('Flowering',  '🌸', '1.2x (Critical Peak Water)'),
+                  ('Fruiting',   '🍅', '1.2x (Critical Peak Water)'),
+                  ('Maturity',   '🌾', '0.8x (Tapering water)')
+                ] %}
+                <option value="{{ stage }}" {% if form_values.growth_stage == stage %}selected{% endif %}>
+                  {{ icon }} {{ stage }} — {{ factor }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Land Area & Soil Type -->
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-semibold">
+                  <i class="bi bi-aspect-ratio text-info me-1"></i>Land Area (Acres)
+                </label>
+                <input type="number" class="form-control" name="land_area" id="landAreaInput"
+                       min="0.1" max="500" step="0.1" value="{{ form_values.land_area }}" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label fw-semibold">
+                  <i class="bi bi-layers-fill text-warning me-1"></i>Soil Type
+                </label>
+                <select class="form-select" name="soil_type" id="soilTypeSelect" required>
+                  {% for s, guj in [
+                    ('Black',      'કાળી જમીન (High retention)'),
+                    ('Loamy',      'ગોરાડુ જમીન (Balanced)'),
+                    ('Sandy Loam', 'રેતાળ ગોરાડુ (Needs frequent)'),
+                    ('Clayey',     'કાંપવાળી (Heavy retention)'),
+                    ('Red',        'રાતી જમીન'),
+                    ('Alluvial',   'બેસિન કાંપ')
+                  ] %}
+                  <option value="{{ s }}" {% if form_values.soil_type == s %}selected{% endif %}>
+                    {{ s }} — {{ guj }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <!-- Soil Moisture Slider & Input (0-100%) -->
+            <div class="mb-3 p-3 bg-light rounded-3 border">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <label class="form-label fw-bold mb-0 text-dark">
+                  <i class="bi bi-moisture text-primary me-1"></i>Soil Moisture (%)
+                </label>
+                <div class="input-group input-group-sm" style="width: 100px;">
+                  <input type="number" class="form-control fw-bold text-center text-primary"
+                         name="soil_moisture" id="moistNumInput"
+                         min="0" max="100" step="1" value="{{ form_values.soil_moisture }}"
+                         oninput="syncMoisture(this.value, 'num')">
+                  <span class="input-group-text fw-bold">%</span>
+                </div>
+              </div>
+
+              <!-- Interactive Range Slider -->
+              <input type="range" class="form-range" id="moistSlider"
+                     min="0" max="100" step="1" value="{{ form_values.soil_moisture }}"
+                     oninput="syncMoisture(this.value, 'slider')">
+
+              <!-- Color gradient visual bar with pointer -->
+              <div class="moisture-track">
+                <div class="moisture-pointer" id="moistPointer" style="left: {{ form_values.soil_moisture }}%;"></div>
+              </div>
+
+              <div class="d-flex justify-content-between small fw-semibold" style="font-size: 0.75rem">
+                <span class="text-danger">🔴 0-25% Critical</span>
+                <span class="text-warning">🟡 25-45% Dry</span>
+                <span class="text-success">🟢 45-65% Ideal</span>
+                <span class="text-info">🔵 &gt;65% Saturated</span>
+              </div>
+            </div>
+
+            <!-- Irrigation Method & Water Availability -->
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-semibold">
+                  <i class="bi bi-water text-primary me-1"></i>Irrigation Method
+                </label>
+                <select class="form-select" name="irrigation_method" id="methodSelect" required>
+                  <option value="Drip" {% if form_values.irrigation_method == 'Drip' %}selected{% endif %}>
+                    💧 Drip (90% eff.)
+                  </option>
+                  <option value="Sprinkler" {% if form_values.irrigation_method == 'Sprinkler' %}selected{% endif %}>
+                    🌀 Sprinkler (75% eff.)
+                  </option>
+                  <option value="Furrow" {% if form_values.irrigation_method == 'Furrow' %}selected{% endif %}>
+                    〰️ Furrow (65% eff.)
+                  </option>
+                  <option value="Flood" {% if form_values.irrigation_method == 'Flood' %}selected{% endif %}>
+                    🌊 Flood (60% eff.)
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-6">
+                <label class="form-label fw-semibold">
+                  <i class="bi bi-bucket-fill text-info me-1"></i>Water Avail.
+                </label>
+                <select class="form-select" name="water_availability" id="waterAvailSelect">
+                  <option value="High" {% if form_values.water_availability == 'High' %}selected{% endif %}>🟢 High</option>
+                  <option value="Medium" {% if form_values.water_availability == 'Medium' %}selected{% endif %}>🟡 Medium</option>
+                  <option value="Low" {% if form_values.water_availability == 'Low' %}selected{% endif %}>🔴 Low / Scarce</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Soil pH & Last Irrigation Date -->
+            <div class="row g-2 mb-4">
+              <div class="col-6">
+                <label class="form-label fw-semibold">Soil pH (optional)</label>
+                <input type="number" class="form-control" name="soil_ph" id="phInput"
+                       min="4.0" max="9.0" step="0.1" value="{{ form_values.soil_ph }}">
+              </div>
+              <div class="col-6">
+                <label class="form-label fw-semibold">Last Irrigation</label>
+                <input type="date" class="form-control" name="last_irrigation_date" id="lastDateInput"
+                       value="{{ form_values.last_irrigation_date }}">
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="analyzeBtn" class="btn btn-success btn-lg w-100 fw-bold shadow-sm py-3 rounded-3">
+              <i class="bi bi-calculator me-2"></i>Analyze Irrigation
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         RIGHT COLUMN — Dynamic Results Card
+    ══════════════════════════════════════════════════════════ -->
+    <div class="col-lg-7 col-xl-7">
+
+      <div id="resultsContainer">
+        {% if result %}
+          {% if result.success %}
+
+          <!-- ── Result Outer Card ───────────────────────────── -->
+          <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+
+            <!-- ── Dynamic Status Banner ─────────────────────── -->
+            <div class="status-banner status-{{ result.status }}">
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <div class="d-flex align-items-center gap-3">
+                  <span style="font-size: 2.8rem; line-height: 1">{{ result.status_ui.icon }}</span>
+                  <div>
+                    <div class="badge bg-white text-dark fw-bold px-3 py-1 rounded-pill mb-1">
+                      {{ result.status_ui.title }}
+                    </div>
+                    <h3 class="fw-bold mb-0">{{ result.status_ui.subtitle }}</h3>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <span class="badge bg-black bg-opacity-25 px-3 py-2 rounded-pill small">
+                    <i class="bi bi-clock me-1"></i>{{ result.timestamp }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body p-4">
+
+              <!-- ── Key Metrics 4-Box Grid ────────────────────── -->
+              <div class="row g-3 mb-4">
+                <div class="col-6 col-md-3">
+                  <div class="res-stat-card bg-light border-0">
+                    <span class="res-stat-icon text-primary">🚰</span>
+                    <div class="res-stat-val text-primary">{{ result.estimated_water_formatted }}</div>
+                    <div class="res-stat-lbl">Estimated Applied Water</div>
+                  </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                  <div class="res-stat-card bg-light border-0">
+                    <span class="res-stat-icon text-success">⏰</span>
+                    <div class="res-stat-val text-dark" style="font-size: 1.1rem; line-height: 1.3">
+                      {{ result.recommended_time }}
+                    </div>
+                    <div class="res-stat-lbl">Recommended Time</div>
+                  </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                  <div class="res-stat-card bg-light border-0">
+                    <span class="res-stat-icon text-info">💧</span>
+                    <div class="res-stat-val text-info">{{ result.soil_moisture }}%</div>
+                    <div class="res-stat-lbl">Soil Moisture</div>
+                  </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                  <div class="res-stat-card bg-light border-0">
+                    <span class="res-stat-icon text-warning">🌧️</span>
+                    <div class="res-stat-val text-dark">{{ result.weather_summary.rain_prob }}%</div>
+                    <div class="res-stat-lbl">Rain Probability</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── "Why?" Explainable Reason Block ────────────── -->
+              <div class="alert alert-{{ result.status_ui.badge_class }} border-0 rounded-4 p-3 mb-4 d-flex align-items-start gap-3">
+                <div class="fs-4 flex-shrink-0">💡</div>
+                <div>
+                  <h6 class="fw-bold mb-1">Why is this recommendation generated?</h6>
+                  <p class="mb-0 small" style="line-height: 1.5">{{ result.reason }}</p>
+                  <div class="mt-2 text-muted" style="font-size: 0.72rem">
+                    <strong>Rule Applied:</strong> {{ result.rule_applied }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Bilingual AI Farmer Advice Card ────────────── -->
+              <div class="ai-advice-card mb-4 shadow-sm">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="fs-5">🤖</span>
+                    <h6 class="fw-bold mb-0 text-success">Farmer-Friendly Action Advice</h6>
+                  </div>
+                  <span class="badge bg-success text-white px-2 py-1 small">Bilingual / દ્વિભાષી</span>
+                </div>
+
+                <p class="mb-2 text-dark fw-medium" style="font-size: 0.92rem; line-height: 1.5">
+                  {{ result.farmer_advice.en }}
+                </p>
+
+                <div class="p-2 rounded-3 bg-white bg-opacity-75 border border-success border-opacity-25 mt-2">
+                  <small class="text-muted d-block mb-1 fw-bold">ગુજરાતી સલાહ (Gujarati Advisory):</small>
+                  <p class="mb-0 text-success fw-semibold" style="font-size: 0.88rem; line-height: 1.5">
+                    {{ result.farmer_advice.gu }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- ── Drip Efficiency & Water Saving Comparison ─── -->
+              {% if result.water_calc and result.estimated_water_L > 0 %}
+              <div class="card bg-light border-0 rounded-4 p-3 mb-4">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                  <div class="fw-bold text-dark small">
+                    <i class="bi bi-droplet-half text-primary me-1"></i>Irrigation Method Efficiency Comparison
+                  </div>
+                  <span class="badge bg-primary px-3 py-1 rounded-pill">
+                    {{ result.irrigation_method }} ({{ result.water_calc.efficiency_pct }}% Efficiency)
+                  </span>
+                </div>
+                <div class="row g-2 text-center small">
+                  <div class="col-4">
+                    <div class="bg-white p-2 rounded-3 border">
+                      <div class="text-muted" style="font-size: 0.7rem">Flood (60% eff.)</div>
+                      <div class="fw-bold text-danger">{{ '{:,}'.format(result.water_calc.flood_equivalent_L) }} L</div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="bg-white p-2 rounded-3 border">
+                      <div class="text-muted" style="font-size: 0.7rem">Current ({{ result.irrigation_method }})</div>
+                      <div class="fw-bold text-primary">{{ '{:,}'.format(result.estimated_water_L) }} L</div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="bg-white p-2 rounded-3 border">
+                      <div class="text-muted" style="font-size: 0.7rem">Drip (90% eff.)</div>
+                      <div class="fw-bold text-success">{{ '{:,}'.format(result.water_calc.drip_equivalent_L) }} L</div>
+                    </div>
+                  </div>
+                </div>
+                {% if result.water_calc.water_saved_with_drip_L > 0 and result.irrigation_method != 'Drip' %}
+                <div class="text-success small fw-semibold mt-2">
+                  <i class="bi bi-check-circle-fill me-1"></i>Switching to Drip irrigation would save approximately 
+                  <strong>{{ '{:,}'.format(result.water_calc.water_saved_with_drip_L) }} Liters</strong> of water per cycle.
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
+
+              <!-- ── Email Alert Integration Action Bar ──────── -->
+              <div class="p-3 rounded-4 mb-4" style="background: #f0f9ff; border: 1.5px solid #7dd3fc">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-envelope-check-fill text-primary fs-4"></i>
+                    <div>
+                      <div class="fw-bold text-dark small">Send Irrigation Email Advisory Report</div>
+                      <small class="text-muted">Enter your email &amp; press Enter to get this report delivered directly to your inbox</small>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-outline-primary fw-bold btn-sm px-3 rounded-pill"
+                          data-bs-toggle="modal" data-bs-target="#emailAlertModal">
+                    <i class="bi bi-eye me-1"></i>Preview &amp; Send
+                  </button>
+                </div>
+
+                <!-- Quick Inline Email Input -->
+                <div class="row g-2 align-items-center mt-1">
+                  <div class="col-sm-8 col-md-7">
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text bg-white fw-bold text-primary">@</span>
+                      <input type="email" class="form-control" id="emailInlineInput"
+                             placeholder="Enter email (e.g. farmer@example.com) & press Enter"
+                             onkeydown="if(event.key==='Enter'){event.preventDefault();sendEmailAlert('inline');}">
+                    </div>
+                  </div>
+                  <div class="col-sm-4 col-md-5">
+                    <button type="button" class="btn btn-primary btn-sm fw-bold w-100 rounded-pill"
+                            id="emailInlineSendBtn" onclick="sendEmailAlert('inline')">
+                      <i class="bi bi-send-fill me-1"></i>Send Email Alert
+                    </button>
+                  </div>
+                </div>
+                <div id="emailInlineFeedback" class="mt-2"></div>
+              </div>
+
+              <!-- ── Advanced Technical Details Accordion (Viva) ── -->
+              <div class="accordion viva-accordion mt-4" id="vivaAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vivaCollapse">
+                      <i class="bi bi-code-square me-2 text-primary"></i>View Technical Details &amp; Calculation Breakdown (Viva / Demo)
+                    </button>
+                  </h2>
+                  <div id="vivaCollapse" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                    <div class="accordion-body bg-white p-3 small">
+                      <div class="mb-2">
+                        <strong class="text-dark">Mathematical Formula Applied:</strong>
+                        <div class="p-2 bg-light rounded font-monospace mt-1" style="font-size: 0.78rem">
+                          {{ result.technical_details.formula }}
+                        </div>
+                      </div>
+
+                      <div class="row g-2 mb-3">
+                        <div class="col-6 col-md-4">
+                          <div class="p-2 bg-light rounded">
+                            <span class="text-muted d-block" style="font-size: 0.7rem">Base Water / Acre:</span>
+                            <span class="fw-bold">{{ '{:,}'.format(result.technical_details.factors_applied.baseWaterPerAcre) }} L</span>
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                          <div class="p-2 bg-light rounded">
+                            <span class="text-muted d-block" style="font-size: 0.7rem">Critical Threshold:</span>
+                            <span class="fw-bold text-danger">{{ result.technical_details.factors_applied.criticalMoisture }}%</span>
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                          <div class="p-2 bg-light rounded">
+                            <span class="text-muted d-block" style="font-size: 0.7rem">Minimum Threshold:</span>
+                            <span class="fw-bold text-warning">{{ result.technical_details.factors_applied.minimumMoisture }}%</span>
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                          <div class="p-2 bg-light rounded">
+                            <span class="text-muted d-block" style="font-size: 0.7rem">Ideal Moisture Range:</span>
+                            <span class="fw-bold text-success">
+                              {{ result.technical_details.factors_applied.idealMoistureMin }}% - {{ result.technical_details.factors_applied.idealMoistureMax }}%
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                          <div class="p-2 bg-light rounded">
+                            <span class="text-muted d-block" style="font-size: 0.7rem">Growth Stage Factor:</span>
+                            <span class="fw-bold">{{ result.technical_details.factors_applied.growthStageMultiplier }}x</span>
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                          <div class="p-2 bg-light rounded">
+                            <span class="text-muted d-block" style="font-size: 0.7rem">System Efficiency:</span>
+                            <span class="fw-bold">{{ result.technical_details.factors_applied.irrigationEfficiency }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="text-muted" style="font-size: 0.72rem">
+                        <i class="bi bi-info-circle me-1"></i>{{ result.disclaimer }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {% else %}
+          <!-- Error Alert -->
+          <div class="alert alert-danger rounded-4 p-4 shadow-sm mb-4">
+            <div class="d-flex align-items-center gap-3">
+              <i class="bi bi-exclamation-triangle-fill fs-3"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Calculation Notice</h6>
+                <p class="mb-0">{{ result.error }}</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+        {% else %}
+          <!-- Initial Placeholder Card -->
+          <div class="card border-0 shadow-sm rounded-4 text-center p-5 mb-4">
+            <div style="font-size: 4rem; line-height: 1" class="mb-3">💧</div>
+            <h4 class="fw-bold text-dark mb-2">Smart Irrigation Decision Engine</h4>
+            <p class="text-muted mx-auto mb-4" style="max-width: 480px">
+              Select your crop, enter current soil moisture and field parameters, then click 
+              <strong>Analyze Irrigation</strong> to generate an instant recommendation.
+            </p>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+              <button class="btn btn-outline-primary btn-sm rounded-pill fw-semibold" onclick="applyTestScenario(1)">
+                🔴 Demo: High Stress Case
+              </button>
+              <button class="btn btn-outline-info btn-sm rounded-pill fw-semibold" onclick="applyTestScenario(3)">
+                🔵 Demo: Rain Expected Case
+              </button>
+              <button class="btn btn-outline-success btn-sm rounded-pill fw-semibold" onclick="applyTestScenario(2)">
+                🟢 Demo: Normal Moisture Case
+              </button>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       IRRIGATION HISTORY SECTION
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card border-0 shadow-sm rounded-4 mt-4" id="historySection">
+    <div class="card-header bg-white border-bottom py-3 px-4 rounded-top-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-clock-history text-primary fs-5"></i>
+        <h5 class="fw-bold mb-0 text-dark">Irrigation Calculation History</h5>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-sm btn-outline-danger rounded-pill" onclick="clearIrrigationHistory()">
+          <i class="bi bi-trash3 me-1"></i>Clear History
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" id="historyTable">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">Date &amp; Time</th>
+              <th>Crop &amp; Stage</th>
+              <th>Area (Acres)</th>
+              <th>Soil Moisture</th>
+              <th>Status</th>
+              <th>Water Requirement</th>
+              <th>Recommended Time</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            {% if history and history|length > 0 %}
+              {% for h in history %}
+              <tr>
+                <td class="ps-4 text-muted small fw-medium">{{ h.date|default(h.timestamp|default('—')) }}</td>
+                <td class="fw-semibold text-dark">
+                  {{ h.crop|default('Crop') }} <span class="badge bg-light text-muted border ms-1">{{ h.growth_stage|default('—') }}</span>
+                </td>
+                <td>{{ h.area_acres|default(1.0) }} Ac</td>
+                <td>
+                  <span class="badge {% if (h.soil_moisture|default(50)) < 25 %}bg-danger{% elif (h.soil_moisture|default(50)) < 45 %}bg-warning text-dark{% elif (h.soil_moisture|default(50)) <= 65 %}bg-success{% else %}bg-info{% endif %} rounded-pill px-2">
+                    {{ h.soil_moisture|default(50) }}%
+                  </span>
+                </td>
+                <td>
+                  <span class="badge {% if h.status=='HIGH' %}bg-danger{% elif h.status=='MEDIUM' %}bg-warning text-dark{% elif h.status=='WAIT' %}bg-info{% elif h.status=='LOW' %}bg-success{% else %}bg-secondary{% endif %} rounded-pill px-2">
+                    {{ h.status|default('LOW') }}
+                  </span>
+                </td>
+                <td class="fw-bold {% if (h.water_estimated_L|default(0)) > 0 %}text-primary{% else %}text-muted{% endif %}">
+                  {% if (h.water_estimated_L|default(0)) > 0 %}{{ '{:,}'.format(h.water_estimated_L) }} L{% else %}0 L (None){% endif %}
+                </td>
+                <td class="small text-muted">{{ h.recommended_time|default('—') }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="7" class="text-center py-4 text-muted">
+                  <i class="bi bi-journal-text me-1"></i>No irrigation calculation history yet. Perform an analysis above to record logs.
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ── Email Alert Modal ──────────────────────────────────────── -->
+<div class="modal fade" id="emailAlertModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header text-white rounded-top-4" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%)">
+        <h5 class="modal-title fw-bold">
+          <i class="bi bi-envelope-paper-fill me-2"></i>Send Irrigation Email Report
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <p class="small text-muted mb-3">
+          Enter your email address to receive an instant, formatted irrigation advisory report directly to your inbox.
+        </p>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Email Address</label>
+          <div class="input-group">
+            <span class="input-group-text fw-bold text-primary">@</span>
+            <input type="email" class="form-control" id="emailModalInput" placeholder="farmer@example.com"
+                   onkeydown="if(event.key==='Enter'){event.preventDefault();sendEmailAlert('modal');}">
+          </div>
+          <small class="text-muted" style="font-size: 0.72rem">Tip: You can press Enter to send immediately.</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-semibold text-muted">Email Subject Preview:</label>
+          <div class="p-2 bg-light rounded-3 fw-bold text-dark small" id="emailPreviewSubject" style="font-size: 0.8rem">
+            {% if result %}🌾 [Smart Agri Alert] {{ result.crop }} Irrigation Advisory — {{ result.status_ui.title }}{% else %}🌾 [Smart Agri Alert] Smart Irrigation Advisory Report{% endif %}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-semibold text-muted">Report Summary Preview:</label>
+          <div class="p-3 bg-light rounded-3 font-monospace small" id="emailPreviewBody" style="white-space: pre-wrap; font-size: 0.78rem; max-height: 180px; overflow-y: auto">
+{% if result %}{{ result.alert_text }}{% else %}🌾 SMART AGRICULTURE SYSTEM — GUJARAT
+💧 Smart Irrigation & Water Management Advisory{% endif %}
+          </div>
+        </div>
+
+        <div id="emailModalFeedback"></div>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary fw-bold rounded-pill px-4" id="emailModalSendBtn" onclick="sendEmailAlert('modal')">
+          <i class="bi bi-send-fill me-1"></i>Send Email Report
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   SMART IRRIGATION CLIENT SCRIPT
+═══════════════════════════════════════════════════════════════ */
+
+const CROP_CONFIGS   = {{ crops_config|tojson if crops_config else '{}' }};
+const CURRENT_RESULT = {{ result|tojson if result else '{}' }};
+
+function syncMoisture(val, source) {
+  let num = parseFloat(val);
+  if (isNaN(num)) num = 0;
+  if (num < 0) num = 0;
+  if (num > 100) num = 100;
+
+  if (source === 'slider') {
+    document.getElementById('moistNumInput').value = num;
+  } else {
+    document.getElementById('moistSlider').value = num;
+  }
+
+  // Update visual pointer
+  const pointer = document.getElementById('moistPointer');
+  if (pointer) pointer.style.left = num + '%';
+
+  const sumMoist = document.getElementById('sumMoistVal');
+  if (sumMoist) sumMoist.textContent = num + '%';
+}
+
+function onCropChange(cropName) {
+  const crop = CROP_CONFIGS[cropName];
+  if (!crop) return;
+  const summaryEl = document.getElementById('cropConfigSummary');
+  if (summaryEl) {
+    summaryEl.textContent = `Optimal moisture: ${crop.idealMoistureMin}% - ${crop.idealMoistureMax}% · Base: ${Number(crop.baseWaterPerAcre).toLocaleString()} L/Acre`;
+  }
+}
+
+// ── Quick Test Scenario Presets ──────────────────────────────
+function applyTestScenario(testNum) {
+  if (testNum === 1) {
+    // Test 1: High Water Stress (Cotton, 20% moist, 10% rain)
+    document.getElementById('cropSelect').value = 'Cotton';
+    document.getElementById('growthStageSelect').value = 'Flowering';
+    document.getElementById('landAreaInput').value = '2.0';
+    document.getElementById('soilTypeSelect').value = 'Black';
+    syncMoisture(20, 'slider');
+    document.getElementById('methodSelect').value = 'Drip';
+    document.getElementById('inputRainProb').value = '10';
+    document.getElementById('inputExpRain').value = '0.0';
+    document.getElementById('inputTemp').value = '34';
+    document.getElementById('dispRainProb').textContent = '10%';
+    document.getElementById('dispExpRain').textContent = '0.0 mm';
+  } else if (testNum === 2) {
+    // Test 2: Normal Moisture (Cotton, 55% moist, 20% rain)
+    document.getElementById('cropSelect').value = 'Cotton';
+    document.getElementById('growthStageSelect').value = 'Vegetative';
+    document.getElementById('landAreaInput').value = '2.0';
+    document.getElementById('soilTypeSelect').value = 'Loamy';
+    syncMoisture(55, 'slider');
+    document.getElementById('methodSelect').value = 'Drip';
+    document.getElementById('inputRainProb').value = '20';
+    document.getElementById('inputExpRain').value = '0.0';
+    document.getElementById('dispRainProb').textContent = '20%';
+    document.getElementById('dispExpRain').textContent = '0.0 mm';
+  } else if (testNum === 3) {
+    // Test 3: Heavy Rain Expected (Cotton, 30% moist, 85% rain, 15mm)
+    document.getElementById('cropSelect').value = 'Cotton';
+    document.getElementById('growthStageSelect').value = 'Vegetative';
+    document.getElementById('landAreaInput').value = '2.0';
+    document.getElementById('soilTypeSelect').value = 'Black';
+    syncMoisture(30, 'slider');
+    document.getElementById('methodSelect').value = 'Drip';
+    document.getElementById('inputRainProb').value = '85';
+    document.getElementById('inputExpRain').value = '15.0';
+    document.getElementById('dispRainProb').textContent = '85%';
+    document.getElementById('dispExpRain').textContent = '15.0 mm';
+  } else if (testNum === 4) {
+    // Test 4: Excessive Moisture (Cotton, 85% moist)
+    document.getElementById('cropSelect').value = 'Cotton';
+    document.getElementById('growthStageSelect').value = 'Vegetative';
+    document.getElementById('landAreaInput').value = '2.0';
+    document.getElementById('soilTypeSelect').value = 'Black';
+    syncMoisture(85, 'slider');
+    document.getElementById('methodSelect').value = 'Drip';
+    document.getElementById('inputRainProb').value = '0';
+    document.getElementById('inputExpRain').value = '0.0';
+    document.getElementById('dispRainProb').textContent = '0%';
+    document.getElementById('dispExpRain').textContent = '0.0 mm';
+  } else if (testNum === 5) {
+    // Test 5: Different Crop (Wheat, 22% moist)
+    document.getElementById('cropSelect').value = 'Wheat';
+    document.getElementById('growthStageSelect').value = 'Flowering';
+    document.getElementById('landAreaInput').value = '3.0';
+    document.getElementById('soilTypeSelect').value = 'Loamy';
+    syncMoisture(22, 'slider');
+    document.getElementById('methodSelect').value = 'Sprinkler';
+    document.getElementById('inputRainProb').value = '10';
+    document.getElementById('inputExpRain').value = '0.0';
+    document.getElementById('dispRainProb').textContent = '10%';
+    document.getElementById('dispExpRain').textContent = '0.0 mm';
+  }
+  onCropChange(document.getElementById('cropSelect').value);
+  // Auto submit form to show result immediately
+  document.getElementById('irrigationForm').submit();
+}
+
+// ── Switch City Weather via AJAX ─────────────────────────────
+function switchCityWeather(city) {
+  if (!city) return;
+  document.getElementById('inputCity').value = city;
+  const label = document.getElementById('weatherCityLabel');
+  if (label) label.innerHTML = `<i class="bi bi-geo-alt-fill me-1"></i>${city}, Gujarat`;
+
+  fetch(`/api/weather/${encodeURIComponent(city)}`)
+    .then(r => r.json())
+    .then(d => {
+      if (d && d.success && d.weather) {
+        const w = d.weather;
+        document.getElementById('dispTemp').textContent = w.temp + '°C';
+        document.getElementById('dispHum').textContent  = w.humidity + '%';
+        document.getElementById('inputTemp').value = w.temp;
+        document.getElementById('inputHum').value  = w.humidity;
+        document.getElementById('inputWindSpeed').value = w.wind_speed || 3.5;
+      }
+    })
+    .catch(err => console.log('Weather switch error:', err));
+}
+
+// ── Send Email Alert Modal & Inline Handler ──────────────────
+function sendEmailAlert(source) {
+  const inlineInput = document.getElementById('emailInlineInput');
+  const modalInput  = document.getElementById('emailModalInput');
+  const rawEmail = (source === 'inline' ? inlineInput?.value : modalInput?.value) || inlineInput?.value || modalInput?.value || '';
+  const cleanEmail = rawEmail.trim();
+
+  const feedback = source === 'inline' 
+    ? document.getElementById('emailInlineFeedback')
+    : document.getElementById('emailModalFeedback');
+
+  const btn = source === 'inline'
+    ? document.getElementById('emailInlineSendBtn')
+    : document.getElementById('emailModalSendBtn');
+
+  const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  if (!cleanEmail || !emailRegex.test(cleanEmail)) {
+    const errHtml = '<div class="alert alert-warning py-2 small mb-0"><i class="bi bi-exclamation-circle me-1"></i>Please enter a valid email address (e.g. farmer@example.com).</div>';
+    if (feedback) feedback.innerHTML = errHtml;
+    return;
+  }
+
+  localStorage.setItem('farmer_email_address', cleanEmail);
+
+  if (inlineInput) inlineInput.value = cleanEmail;
+  if (modalInput)  modalInput.value = cleanEmail;
+
+  if (btn) {
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Sending Email...';
+    btn.disabled = true;
+  }
+
+  const subject = document.getElementById('emailPreviewSubject')?.textContent?.trim() || '🌾 Smart Agriculture Irrigation Advisory';
+  const bodyText = document.getElementById('emailPreviewBody')?.textContent?.trim() || '';
+  const mailtoUrl = `mailto:${encodeURIComponent(cleanEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+  fetch('/api/irrigation/send-email', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      email: cleanEmail,
+      alert_data: CURRENT_RESULT
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (btn) {
+      btn.innerHTML = '<i class="bi bi-send-fill me-1"></i>Send Email Alert';
+      btn.disabled = false;
+    }
+    if (data.success) {
+      const msg = data.message || `Advisory report successfully sent to ${cleanEmail}!`;
+      const html = `
+        <div class="alert alert-success py-2 px-3 small rounded-3 mt-2 shadow-sm">
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+              <i class="bi bi-check-circle-fill me-1 text-success"></i>
+              <strong>Success!</strong> ${msg}
+            </div>
+            <a href="${mailtoUrl}" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold">
+              <i class="bi bi-envelope-open me-1"></i>Open in Mail Client →
+            </a>
+          </div>
+        </div>`;
+      if (feedback) feedback.innerHTML = html;
+      const otherFeedback = source === 'inline' ? document.getElementById('emailModalFeedback') : document.getElementById('emailInlineFeedback');
+      if (otherFeedback) otherFeedback.innerHTML = html;
+    } else {
+      const errHtml = `<div class="alert alert-danger py-2 small mt-2"><i class="bi bi-exclamation-triangle me-1"></i>${data.error || 'Failed to dispatch email.'}</div>`;
+      if (feedback) feedback.innerHTML = errHtml;
+    }
+  })
+  .catch(err => {
+    if (btn) {
+      btn.innerHTML = '<i class="bi bi-send-fill me-1"></i>Send Email Alert';
+      btn.disabled = false;
+    }
+    const fallbackHtml = `
+      <div class="alert alert-info py-2 small mt-2">
+        <div>Email prepared for <strong>${cleanEmail}</strong>.</div>
+        <a href="${mailtoUrl}" class="btn btn-sm btn-primary rounded-pill mt-2 fw-bold">
+          <i class="bi bi-envelope me-1"></i>Open in Email App Now →
+        </a>
+      </div>`;
+    if (feedback) feedback.innerHTML = fallbackHtml;
+  });
+}
+
+// ── Clear History ────────────────────────────────────────────
+function clearIrrigationHistory() {
+  if (!confirm('Are you sure you want to clear the irrigation calculation history?')) return;
+  fetch('/api/irrigation/history', { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('historyTableBody').innerHTML =
+          '<tr><td colspan="7" class="text-center py-4 text-muted"><i class="bi bi-journal-text me-1"></i>History cleared.</td></tr>';
+      }
+    });
+}
+
+// ── Preload saved email & sync with localStorage ─────────────
+document.addEventListener('DOMContentLoaded', function () {
+  const selectedCrop = document.getElementById('cropSelect')?.value;
+  if (selectedCrop) onCropChange(selectedCrop);
+
+  // Restore saved email address
+  const savedEmail = localStorage.getItem('farmer_email_address');
+  if (savedEmail) {
+    const inlineInput = document.getElementById('emailInlineInput');
+    const modalInput  = document.getElementById('emailModalInput');
+    if (inlineInput) inlineInput.value = savedEmail;
+    if (modalInput)  modalInput.value = savedEmail;
+  }
+});
+</script>
+{% endblock %}

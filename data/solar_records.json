@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp": "2026-09-25T13:38:30.551198",
+    "total_land": 5.0,
+    "solar_land": 1.0,
+    "num_panels": 200,
+    "monthly_income": 36960,
+    "annual_income": 449680,
+    "payback_years": 11.5
+  }
+]

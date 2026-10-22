@@ -1,0 +1,665 @@
+{
+  "crop_recommendations": [
+    {
+      "timestamp": "2026-09-25T13:38:30.543308",
+      "inputs": {
+        "N": 90,
+        "P": 45,
+        "K": 45,
+        "temp": 28,
+        "humidity": 70,
+        "ph": 6.5,
+        "rainfall": 120,
+        "season": "Kharif",
+        "soil": "Loamy"
+      },
+      "top_recommendation": "Maize"
+    },
+    {
+      "timestamp": "2026-09-25T13:47:40.880529",
+      "inputs": {
+        "N": 90.0,
+        "P": 45.0,
+        "K": 45.0,
+        "temp": 28.0,
+        "humidity": 29.0,
+        "ph": 6.9,
+        "rainfall": 120.0,
+        "season": "Rabi",
+        "soil": "Clayey"
+      },
+      "top_recommendation": "Maize"
+    },
+    {
+      "timestamp": "2026-09-25T22:22:29.067614",
+      "inputs": {
+        "N": 90,
+        "P": 45,
+        "K": 45,
+        "ph": 6.5,
+        "rainfall": 600,
+        "season": "Kharif",
+        "soil": "Black",
+        "organic_carbon": 0.8,
+        "sand": 30,
+        "silt": 35,
+        "clay": 35,
+        "irrigation": "Yes",
+        "water_source": "Borewell",
+        "water_avail": "Medium",
+        "irr_type": "Drip",
+        "salinity": "Normal"
+      },
+      "top_recommendation": "Cotton"
+    },
+    {
+      "timestamp": "2026-09-25T23:03:28.478724",
+      "inputs": {
+        "N": 86.0,
+        "P": 48.0,
+        "K": 54.0,
+        "ph": 6.7,
+        "rainfall": 256.0,
+        "season": "Kharif",
+        "soil": "Sandy Loam",
+        "organic_carbon": 0.1,
+        "sand": 32.0,
+        "silt": 15.0,
+        "clay": 53.0,
+        "irrigation": "No",
+        "water_source": "Canal",
+        "water_avail": "Low",
+        "irr_type": "None",
+        "salinity": "Slightly Saline"
+      },
+      "top_recommendation": "Groundnut"
+    }
+  ],
+  "disease_detections": [],
+  "fertilizer_recommendations": [
+    {
+      "timestamp": "2026-09-25T13:38:30.543987",
+      "crop": "Rice",
+      "soil": {
+        "N": 30,
+        "P": 20,
+        "K": 20,
+        "ph": 6.5
+      },
+      "recommended": "NPK 12-32-16"
+    }
+  ],
+  "weather_queries": [
+    {
+      "timestamp": "2026-09-25T22:39:54.924333",
+      "city": "Ahmedabad",
+      "temp": 29.6,
+      "humidity": 61,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T22:40:19.430021",
+      "city": "Ahmedabad",
+      "temp": 29.6,
+      "humidity": 61,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T22:40:31.045893",
+      "city": "Ahmedabad",
+      "temp": 29.6,
+      "humidity": 61,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T22:41:43.956823",
+      "city": "Ahmedabad",
+      "temp": 29.6,
+      "humidity": 61,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T22:44:35.544818",
+      "city": "Rajkot",
+      "temp": 26.5,
+      "humidity": 78,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T22:45:13.202727",
+      "city": "Rajkot",
+      "temp": 26.5,
+      "humidity": 78,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T22:45:40.043742",
+      "city": "Ahmedabad",
+      "temp": 29.6,
+      "humidity": 61,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T22:45:51.772616",
+      "city": "Ahmedabad",
+      "temp": 29.6,
+      "humidity": 61,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T23:00:26.682819",
+      "city": "Ahmedabad",
+      "temp": 28.7,
+      "humidity": 62,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T23:03:52.561621",
+      "city": "Ahmedabad",
+      "temp": 28.7,
+      "humidity": 62,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T23:03:54.853069",
+      "city": "Ahmedabad",
+      "temp": 28.7,
+      "humidity": 62,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T23:04:04.543170",
+      "city": "Ahmedabad",
+      "temp": 28.7,
+      "humidity": 62,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-25T23:04:06.081481",
+      "city": "Ahmedabad",
+      "temp": 28.7,
+      "humidity": 62,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T07:58:31.272232",
+      "city": "Ahmedabad",
+      "temp": 25.5,
+      "humidity": 78,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T07:58:46.761489",
+      "city": "Ahmedabad",
+      "temp": 25.5,
+      "humidity": 78,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T07:59:06.017563",
+      "city": "Ahmedabad",
+      "temp": 25.5,
+      "humidity": 78,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:00:39.979592",
+      "city": "Ahmedabad",
+      "temp": 25.5,
+      "humidity": 78,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:22:02.812270",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:22:03.725631",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:22:06.390167",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:23:07.114933",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:23:09.262969",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:23:11.312524",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:23:13.154416",
+      "city": "Rajkot",
+      "temp": 28.2,
+      "humidity": 80,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:25:17.370732",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:25:28.228371",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:25:44.300998",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:27:09.931499",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:32:17.432790",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:33:13.638292",
+      "city": "Bhuj",
+      "temp": 26.9,
+      "humidity": 74,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:33:32.275355",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:33:37.196019",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:33:45.384224",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:33:47.425887",
+      "city": "Ahmedabad",
+      "temp": 26.2,
+      "humidity": 76,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:44:22.106953",
+      "city": "Bhuj",
+      "temp": 26.9,
+      "humidity": 74,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:48:57.271074",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:49:38.774850",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:58:57.553108",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T08:59:45.702377",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T09:02:27.571521",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T09:02:43.033204",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T09:03:03.120950",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T09:08:58.806224",
+      "city": "Ahmedabad",
+      "temp": 26.4,
+      "humidity": 73,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-09-26T10:39:49.263626",
+      "city": "Ahmedabad",
+      "temp": 28.2,
+      "humidity": 63,
+      "irrigation_status": "Normal Schedule"
+    },
+    {
+      "timestamp": "2026-10-14T17:15:46.618469",
+      "city": "Ahmedabad",
+      "temp": 34.8,
+      "humidity": 33,
+      "irrigation_status": "Irrigate Now"
+    },
+    {
+      "timestamp": "2026-10-14T17:15:55.178458",
+      "city": "Ahmedabad",
+      "temp": 34.8,
+      "humidity": 33,
+      "irrigation_status": "Irrigate Now"
+    },
+    {
+      "timestamp": "2026-10-14T17:15:56.292729",
+      "city": "Ahmedabad",
+      "temp": 34.8,
+      "humidity": 33,
+      "irrigation_status": "Irrigate Now"
+    },
+    {
+      "timestamp": "2026-10-14T17:15:57.650584",
+      "city": "Ahmedabad",
+      "temp": 34.8,
+      "humidity": 33,
+      "irrigation_status": "Irrigate Now"
+    },
+    {
+      "timestamp": "2026-10-16T13:49:05.888110",
+      "city": "Ahmedabad",
+      "temp": 35.2,
+      "humidity": 31,
+      "irrigation_status": "Irrigate Now"
+    },
+    {
+      "timestamp": "2026-10-16T13:49:17.398017",
+      "city": "Ahmedabad",
+      "temp": 35.2,
+      "humidity": 31,
+      "irrigation_status": "Irrigate Now"
+    }
+  ],
+  "irrigation_logs": [
+    {
+      "timestamp": "2026-09-25T13:38:30.546333",
+      "crop": "Rice",
+      "area": 2.0,
+      "method": "Drip",
+      "soil_moisture": 45,
+      "sessions_week": 7
+    },
+    {
+      "timestamp": "2026-09-26T08:23:14.083827",
+      "date": "26 Sep 2026 08:23",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.5,
+      "soil_type": "Black",
+      "soil_moisture": 20.0,
+      "method": "Drip",
+      "water_estimated_L": 75938,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T08:23:14.093232",
+      "date": "26 Sep 2026 08:23",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.5,
+      "soil_type": "Black",
+      "soil_moisture": 20.0,
+      "method": "Drip",
+      "water_estimated_L": 75938,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T08:25:45.427202",
+      "date": "26 Sep 2026 08:25",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 20.0,
+      "method": "Drip",
+      "water_estimated_L": 60750,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T08:27:11.356838",
+      "date": "26 Sep 2026 08:27",
+      "crop": "Cotton",
+      "growth_stage": "Vegetative",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 30.0,
+      "method": "Drip",
+      "water_estimated_L": 0,
+      "status": "WAIT",
+      "water_stress": "Low / Rain Delay",
+      "recommended_time": "Wait until after rainfall",
+      "rain_prob": 85.0
+    },
+    {
+      "timestamp": "2026-09-26T08:33:49.175104",
+      "date": "26 Sep 2026 08:33",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 20.0,
+      "method": "Drip",
+      "water_estimated_L": 60750,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T08:33:49.191815",
+      "date": "26 Sep 2026 08:33",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 20.0,
+      "method": "Drip",
+      "water_estimated_L": 60750,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T08:44:24.061756",
+      "date": "26 Sep 2026 08:44",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 20.0,
+      "method": "Drip",
+      "water_estimated_L": 60750,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T08:49:41.216220",
+      "date": "26 Sep 2026 08:49",
+      "crop": "Cotton",
+      "growth_stage": "Vegetative",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 45.0,
+      "method": "Drip",
+      "water_estimated_L": 0,
+      "status": "LOW",
+      "water_stress": "Low / Monitor",
+      "recommended_time": "No irrigation required today",
+      "rain_prob": 0.0
+    },
+    {
+      "timestamp": "2026-09-26T09:02:28.328503",
+      "date": "26 Sep 2026 09:02",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 22.0,
+      "method": "Drip",
+      "water_estimated_L": 64500,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T09:03:04.537912",
+      "date": "26 Sep 2026 09:03",
+      "crop": "Cotton",
+      "growth_stage": "Flowering",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 20.0,
+      "method": "Drip",
+      "water_estimated_L": 60750,
+      "status": "HIGH",
+      "water_stress": "High",
+      "recommended_time": "Early Morning (06:00 AM - 08:00 AM) or Late Evening (06:00 PM - 07:30 PM)",
+      "rain_prob": 10.0
+    },
+    {
+      "timestamp": "2026-09-26T09:09:01.062085",
+      "date": "26 Sep 2026 09:09",
+      "crop": "Cotton",
+      "growth_stage": "Vegetative",
+      "area_acres": 2.0,
+      "soil_type": "Black",
+      "soil_moisture": 45.0,
+      "method": "Drip",
+      "water_estimated_L": 0,
+      "status": "LOW",
+      "water_stress": "Low / Monitor",
+      "recommended_time": "No irrigation required today",
+      "rain_prob": 0.0
+    }
+  ],
+  "market_queries": [
+    {
+      "timestamp": "2026-09-25T13:38:30.550198",
+      "crop": "Wheat",
+      "state": "Maharashtra",
+      "best_price": 2639
+    },
+    {
+      "timestamp": "2026-09-25T13:48:58.465055",
+      "crop": "Cotton",
+      "state": "Maharashtra",
+      "best_price": 7610
+    },
+    {
+      "timestamp": "2026-09-25T19:25:38.066334",
+      "crop": "Wheat",
+      "district": "Ahmedabad",
+      "best_price": 2522
+    },
+    {
+      "timestamp": "2026-09-25T19:51:56.591928",
+      "crop": "Wheat",
+      "district": "Anand",
+      "best_price": 2456
+    },
+    {
+      "timestamp": "2026-09-25T20:32:01.891114",
+      "crop": "Rice",
+      "district": "Ahmedabad",
+      "best_price": 2510
+    },
+    {
+      "timestamp": "2026-09-25T20:34:23.991164",
+      "crop": "Rice",
+      "district": "Anand",
+      "best_price": 2507
+    }
+  ],
+  "solar_estimates": [
+    {
+      "timestamp": "2026-09-25T13:38:30.551198",
+      "solar_land": 1.0,
+      "num_panels": 200,
+      "annual_income": 449680
+    }
+  ]
+}

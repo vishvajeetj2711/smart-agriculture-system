@@ -1,0 +1,83 @@
+{
+  "subscribers": [
+    {
+      "id": 1,
+      "whatsapp_number": "+919876543210",
+      "crop": "Wheat",
+      "crop_gu": "ઘઉં",
+      "status": "active",
+      "created_at": "2026-09-25T19:25:25.629765",
+      "updated_at": "2026-09-25T19:25:25.631454",
+      "last_sent_at": "2026-09-25T19:25:38.068807",
+      "total_sent": 1
+    },
+    {
+      "id": 2,
+      "whatsapp_number": "+919876543211",
+      "crop": "Groundnut",
+      "crop_gu": "મગફળી",
+      "status": "stopped",
+      "created_at": "2026-09-25T19:25:25.631454",
+      "updated_at": "2026-09-25T19:25:25.634360",
+      "last_sent_at": null,
+      "total_sent": 0
+    },
+    {
+      "id": 3,
+      "whatsapp_number": "+919988776655",
+      "crop": "Groundnut",
+      "crop_gu": "મગફળી",
+      "status": "stopped",
+      "created_at": "2026-09-25T19:28:04.653132",
+      "updated_at": "2026-09-25T19:28:12.786942",
+      "last_sent_at": null,
+      "total_sent": 0
+    },
+    {
+      "id": 4,
+      "whatsapp_number": "+917096098250",
+      "crop": "Cotton",
+      "crop_gu": "કપાસ",
+      "status": "active",
+      "created_at": "2026-09-25T19:29:30.706406",
+      "updated_at": "2026-09-25T19:51:34.329704",
+      "last_sent_at": null,
+      "total_sent": 0
+    },
+    {
+      "id": 5,
+      "whatsapp_number": "+917788990011",
+      "crop": "Cotton",
+      "crop_gu": "કપાસ",
+      "status": "active",
+      "created_at": "2026-09-25T19:48:32.500937",
+      "updated_at": "2026-09-25T19:48:32.500937",
+      "last_sent_at": null,
+      "total_sent": 0
+    },
+    {
+      "id": 6,
+      "whatsapp_number": "+919900001111",
+      "crop": "Cotton",
+      "crop_gu": "કપાસ",
+      "status": "stopped",
+      "created_at": "2026-09-25T19:51:02.370470",
+      "updated_at": "2026-09-25T19:51:06.447519",
+      "last_sent_at": null,
+      "total_sent": 0
+    },
+    {
+      "id": 7,
+      "whatsapp_number": "+919900001234",
+      "crop": "Cotton",
+      "crop_gu": "Cotton",
+      "status": "active",
+      "created_at": "2026-09-25T20:53:29.575041",
+      "updated_at": "2026-09-25T20:53:29.575041",
+      "last_sent_at": null,
+      "total_sent": 0
+    }
+  ],
+  "total_sent": 1,
+  "last_daily_run": "2026-09-25T19:25:38.069810"
+}

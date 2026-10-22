@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Smart Agriculture Gujarat{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ── Hero weather card (matches weather page style) ──────── */
+.dash-weather-card {
+  background: linear-gradient(135deg, #0a2342 0%, #0d47a1 45%, #1976d2 100%);
+  border-radius: 22px !important;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  border: none !important;
+}
+.dash-weather-card::before {
+  content: "";
+  position: absolute; top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.dash-weather-card::after {
+  content: "";
+  position: absolute; bottom: -80px; left: 35%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,.04) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.dw-inner { position: relative; z-index: 2; padding: 22px 28px 16px; }
+.dw-bottom {
+  position: relative; z-index: 2;
+  background: rgba(0,0,0,.18);
+  padding: 10px 28px;
+  border-radius: 0 0 22px 22px;
+  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+  font-size: 0.78rem; opacity: .8;
+}
+.dw-bottom-item { display: flex; align-items: center; gap: 5px; }
+
+.dw-temp-big { font-size: 4.2rem; font-weight: 800; line-height: 1; letter-spacing: -2px; }
+.dw-city     { font-size: 0.95rem; font-weight: 600; opacity: .88; }
+.dw-desc     { font-size: 1rem; opacity: .82; font-weight: 500; }
+.dw-sub      { font-size: 0.78rem; opacity: .6; }
+
+.dw-hilow {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,.12); border-radius: 30px;
+  padding: 5px 14px; font-size: 0.8rem; margin-top: 8px;
+}
+.dw-hilow .hot  { color: #ffab40; font-weight: 700; }
+.dw-hilow .cold { color: #90caf9; font-weight: 700; }
+
+.dw-stat {
+  background: rgba(255,255,255,.13);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 16px;
+  padding: 14px 10px; text-align: center;
+  transition: background .15s;
+}
+.dw-stat:hover { background: rgba(255,255,255,.2); }
+.dw-stat .ds-emoji { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+.dw-stat .ds-val   { font-size: 1rem; font-weight: 700; display: block; }
+.dw-stat .ds-lbl   { font-size: 0.62rem; opacity: .7; display: block;
+                      margin-top: 2px; letter-spacing: .4px; text-transform: uppercase; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 py-3">
+
+  <!-- Hero Banner -->
+  <div class="hero-banner rounded-4 mb-4 p-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <h1 class="hero-title mb-1">🌾 Smart Agriculture System</h1>
+        <p class="hero-subtitle mb-0 opacity-75 small">AI-Powered Farming Assistant for Gujarat Farmers</p>
+      </div>
+      <div class="text-end d-none d-md-block">
+        <span class="badge bg-white text-success fs-6 px-3 py-2 rounded-pill shadow-sm">
+          <i class="bi bi-geo-alt-fill me-1"></i>Gujarat
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Improved Weather Card (matches weather page hero) ── -->
+  {% if weather %}
+  <div class="card dash-weather-card shadow-lg mb-4">
+    <div class="dw-inner">
+      <div class="row align-items-center g-3">
+
+        <!-- Left: temp + city + desc -->
+        <div class="col-md-5">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-geo-alt-fill" style="opacity:.8;font-size:.9rem"></i>
+            <span class="dw-city">{{ weather.city }}, Gujarat, India</span>
+            {% if weather.demo %}
+            <span style="background:rgba(255,255,255,.15);font-size:0.65rem;padding:2px 8px;border-radius:10px">Demo</span>
+            {% endif %}
+          </div>
+
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <div class="dw-temp-big">{{ weather.temp }}</div>
+            <div>
+              <span style="font-size:1.8rem;font-weight:300;opacity:.6">°C</span>
+              {% if weather.icon %}
+              <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png"
+                   alt="{{ weather.description }}" width="60" height="60"
+                   style="display:block;margin-top:-6px"
+                   onerror="this.style.display='none'">
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="dw-desc mb-1">{{ weather.description }}</div>
+          <div class="dw-sub">Feels like {{ weather.feels_like }}°C</div>
+
+          <div class="dw-hilow">
+            <span><i class="bi bi-arrow-up-short"></i><span class="hot">{{ weather.temp_max }}°</span> High</span>
+            <span style="opacity:.35">|</span>
+            <span><i class="bi bi-arrow-down-short"></i><span class="cold">{{ weather.temp_min }}°</span> Low</span>
+          </div>
+        </div>
+
+        <!-- Right: 4 frosted stat pills -->
+        <div class="col-md-7">
+          <div class="row g-2">
+            {% for emoji, val, lbl in [
+              ('💧', weather.humidity|string + '%',    'Humidity'),
+              ('💨', weather.wind_speed|string + ' m/s','Wind Speed'),
+              ('☁️', weather.clouds|string + '%',      'Cloud Cover'),
+              ('👁️', ((weather.visibility//1000)|string + ' km') if weather.visibility else 'N/A', 'Visibility'),
+            ] %}
+            <div class="col-6 col-md-3">
+              <div class="dw-stat">
+                <span class="ds-emoji">{{ emoji }}</span>
+                <span class="ds-val">{{ val }}</span>
+                <span class="ds-lbl">{{ lbl }}</span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom strip -->
+    <div class="dw-bottom">
+      <div class="dw-bottom-item"><i class="bi bi-sunrise"></i>Sunrise {{ weather.sunrise }}</div>
+      <div class="dw-bottom-item"><i class="bi bi-sunset"></i>Sunset {{ weather.sunset }}</div>
+      <div class="dw-bottom-item"><i class="bi bi-cloud-drizzle"></i>Rain (1h) {{ weather.rain_1h }} mm</div>
+      <div class="dw-bottom-item ms-auto">
+        <a href="{{ url_for('weather') }}"
+           style="color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:0.8rem">
+          <i class="bi bi-calendar-week me-1"></i>7-Day Forecast →
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ── Module Cards (5 modules) ──────────────── -->
+  <h5 class="section-title mb-3">
+    <i class="bi bi-grid-fill me-2 text-success"></i>All Modules
+  </h5>
+  <div class="row g-3 mb-4">
+    {% set modules = [
+      ('crop',       '🌱', 'Crop',             'Recommendation',   'bg-success-soft'),
+      ('irrigation', '💧', 'Smart Irrigation', 'Water Management',  'bg-info-soft'),
+      ('disease',    '🔬', 'Disease',          'Detection',        'bg-danger-soft'),
+      ('weather',    '⛅', 'Weather',          '7-Day Forecast',   'bg-info-soft'),
+      ('market',     '📊', 'Market',           'Mandi Prices',     'bg-success-soft'),
+    ] %}
+    {% for ep, icon, en, sub, bg in modules %}
+    <div class="col-6 col-md-4 col-lg">
+      <a href="{{ url_for(ep) }}" class="module-card card border-0 shadow-sm text-decoration-none h-100">
+        <div class="card-body text-center py-4">
+          <div class="module-icon {{ bg }} mb-3">{{ icon }}</div>
+          <h6 class="fw-bold text-dark mb-0">{{ en }}</h6>
+          <p class="text-muted small mb-0">{{ sub }}</p>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+    <!-- Help -->
+    <div class="col-6 col-md-4 col-lg">
+      <div class="module-card card border-0 shadow-sm h-100"
+           data-bs-toggle="modal" data-bs-target="#helpModal" style="cursor:pointer">
+        <div class="card-body text-center py-4">
+          <div class="module-icon bg-secondary-soft mb-3">❓</div>
+          <h6 class="fw-bold text-dark mb-0">Help</h6>
+          <p class="text-muted small mb-0">How to Use</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary-green text-white">
+        <h5 class="modal-title fw-bold">🌾 How to Use Smart Agriculture System</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="row g-3">
+          {% set helps = [
+            ('success','🌱','Crop Recommendation','Enter soil NPK, pH, texture and water details — AI suggests the best Gujarat crop.'),
+            ('info',   '💧','Smart Irrigation',   'Analyze crop stage, soil moisture & rainfall forecast for precise water timing and volume.'),
+            ('danger', '🔬','Disease Detection',  'Upload a leaf photo — AI detects the disease and shows treatment steps.'),
+            ('info',   '⛅','Weather Forecast',   'Search by city or PIN code — get live weather and 7-day forecast.'),
+            ('success','📊','Market Prices',      'Select crop and Gujarat district — live mandi prices, trend chart and sell advice.'),
+          ] %}
+          {% for color, icon, title, desc in helps %}
+          <div class="col-md-6">
+            <h6 class="fw-bold text-{{ color }}">{{ icon }} {{ title }}</h6>
+            <p class="small text-muted mb-0">{{ desc }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" data-bs-dismiss="modal">Got it! 👍</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

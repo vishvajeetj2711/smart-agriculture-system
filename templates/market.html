@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+{% block title %}Market Prices — Smart Agriculture Gujarat{% endblock %}
+
+{% block extra_head %}
+<style>
+  .best-row      { background:#f0fff4 !important; }
+  .chart-toolbar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 py-3">
+
+  <div class="page-header mb-4">
+    <h2 class="page-title">📊 Gujarat Market Prices</h2>
+    <p class="text-muted mb-0">Live Agmarknet mandi prices for Gujarat districts with 7-day trend and AI sell advice</p>
+  </div>
+
+  <!-- Search Form -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-3">
+      <form method="POST" action="{{ url_for('market') }}" class="row g-2 align-items-end">
+        <div class="col-12 col-md-4">
+          <label class="form-label fw-semibold mb-1">Crop</label>
+          <select class="form-select form-select-lg" name="crop" required>
+            {% for c, g in (alert_crops or []) %}
+            <option value="{{ c }}" {% if c==crop %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label fw-semibold mb-1">District</label>
+          <select class="form-select form-select-lg" name="state" required>
+            {% for d in ['Ahmedabad','Anand','Banaskantha','Bharuch','Bhavnagar',
+                         'Gandhinagar','Jamnagar','Junagadh','Kheda','Kutch',
+                         'Mehsana','Rajkot','Surat','Surendranagar','Vadodara'] %}
+            <option value="{{ d }}" {% if d==state %}selected{% endif %}>{{ d }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12 col-md-4">
+          <button type="submit" class="btn btn-success btn-lg w-100 fw-bold">
+            <i class="bi bi-search me-2"></i>Get Prices
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if result and result.success %}
+
+    {% if result.demo %}
+    <div class="alert alert-warning py-2 mb-3 small">
+      <i class="bi bi-info-circle-fill me-1"></i>
+      <strong>Demo Mode:</strong> Add your data.gov.in API key in config.json for live Agmarknet prices.
+    </div>
+    {% endif %}
+
+    <!-- AI Advice Banner -->
+    <div class="card border-0 shadow-sm mb-4 border-{{ result.advice.color }} border-start border-5">
+      <div class="card-body p-3 d-flex align-items-start gap-3 flex-wrap">
+        <div class="fs-1 flex-shrink-0">{{ result.advice.icon }}</div>
+        <div class="flex-grow-1">
+          <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+            <h5 class="fw-bold mb-0">{{ result.advice.recommendation }}</h5>
+            <span class="badge bg-{{ result.advice.color }}">AI Advice</span>
+          </div>
+          <p class="text-muted mb-2 small">{{ result.advice.reason }}</p>
+          <div class="d-flex gap-2 flex-wrap">
+            <span class="badge bg-success-soft text-success">🏪 Best Market: {{ result.advice.best_market }}</span>
+            <span class="badge bg-primary-soft text-primary">💰 Best Price: Rs.{{ "{:,}".format(result.advice.best_price) }}/qtl</span>
+            {% if result.msp %}
+            <span class="badge bg-warning-soft text-warning">Govt MSP: Rs.{{ "{:,}".format(result.msp) }}/qtl</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Price Table -->
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-success text-white fw-semibold">
+            <i class="bi bi-table me-2"></i>{{ crop }} — {{ state }} District, Gujarat
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Market / Mandi</th>
+                  <th>Min Rs.</th>
+                  <th>Max Rs.</th>
+                  <th>Modal Rs.</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in result.prices %}
+                <tr class="{% if loop.first %}best-row fw-semibold{% endif %}">
+                  <td>
+                    {% if loop.first %}<i class="bi bi-star-fill text-warning me-1"></i>{% endif %}
+                    {{ p.market }}
+                  </td>
+                  <td class="text-muted">{{ "{:,}".format(p.min_price) }}</td>
+                  <td class="text-muted">{{ "{:,}".format(p.max_price) }}</td>
+                  <td class="fw-bold text-success">Rs.{{ "{:,}".format(p.modal_price) }}</td>
+                  <td class="small text-muted">{{ p.date }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-light small text-muted">
+            All prices in Rs. per quintal (100 kg) — Gujarat Agmarknet
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart Panel -->
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-light">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <span class="fw-semibold small">
+                <i class="bi bi-graph-up me-2 text-success"></i>Price Trend
+                <span class="ms-2 badge bg-{{ result.trend.trend.color }}">
+                  {{ result.trend.trend.icon }} {{ result.trend.trend.direction }} ({{ result.trend.trend.pct }}%)
+                </span>
+              </span>
+              <div class="d-flex gap-1">
+                <button class="btn btn-outline-primary chart-type-btn active" id="btnLine" onclick="setChartType('line',this)">
+                  📈 Line
+                </button>
+                <button class="btn btn-outline-primary chart-type-btn" id="btnBar" onclick="setChartType('bar',this)">
+                  📊 Bar
+                </button>
+              </div>
+            </div>
+            <div class="chart-toolbar mt-2">
+              <span class="small text-muted me-1">Show:</span>
+              <button class="btn btn-outline-success chart-filter-btn" onclick="filterChart(3,this)">3 Days</button>
+              <button class="btn btn-outline-success chart-filter-btn active" onclick="filterChart(7,this)">7 Days</button>
+              <button class="btn btn-outline-success chart-filter-btn" onclick="filterChart(30,this)">30 Days</button>
+            </div>
+          </div>
+          <div class="card-body p-3">
+            <canvas id="priceChart" height="200"></canvas>
+          </div>
+          <div class="card-footer bg-light p-2">
+            <div class="row g-1 text-center">
+              <div class="col-4">
+                <div class="fw-bold text-success small">Rs.{{ "{:,}".format(result.trend.prices[-1]) }}</div>
+                <div class="text-muted" style="font-size:0.72rem">Today</div>
+              </div>
+              <div class="col-4">
+                <div class="fw-bold small">Rs.{{ "{:,}".format(result.trend.prices[0]) }}</div>
+                <div class="text-muted" style="font-size:0.72rem">7 Days Ago</div>
+              </div>
+              <div class="col-4">
+                {% set avg = (result.trend.prices|sum) // (result.trend.prices|length) %}
+                <div class="fw-bold text-primary small">Rs.{{ "{:,}".format(avg) }}</div>
+                <div class="text-muted" style="font-size:0.72rem">Average</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% elif result and not result.success %}
+    <div class="alert alert-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>{{ result.error }}</div>
+  {% else %}
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body py-5">
+        <div class="placeholder-icon mb-3">📊</div>
+        <h5 class="text-muted">Select a Gujarat crop and district to view live mandi prices</h5>
+        <p class="text-muted small">Shows comparison table, 7-day trend chart and AI sell/wait advice.</p>
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{% if result and result.success %}
+<script>
+const ALL_LABELS = {{ result.trend.labels | tojson }};
+const ALL_PRICES = {{ result.trend.prices | tojson }};
+const TREND_DIR  = "{{ result.trend.trend.direction }}";
+const TREND_COLOR = TREND_DIR==="Rising" ? "#2ecc71" : TREND_DIR==="Falling" ? "#e74c3c" : "#f39c12";
+
+let currentChart = null;
+let currentType  = 'line';
+let currentDays  = 7;
+
+function buildChart(days, type) {
+  const n      = Math.min(days, ALL_LABELS.length);
+  const labels = ALL_LABELS.slice(-n);
+  const data   = ALL_PRICES.slice(-n);
+  const ctx    = document.getElementById('priceChart');
+  if (!ctx) return;
+  if (currentChart) currentChart.destroy();
+  currentChart = new Chart(ctx, {
+    type: type,
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Rs. / Quintal',
+        data:  data,
+        borderColor:     TREND_COLOR,
+        backgroundColor: type === 'bar' ? TREND_COLOR + 'bb' : TREND_COLOR + '22',
+        borderWidth:     type === 'bar' ? 0 : 2.5,
+        pointBackgroundColor: TREND_COLOR,
+        pointRadius:     type === 'bar' ? 0 : 4,
+        tension:         0.4,
+        fill:            type !== 'bar',
+        borderRadius:    type === 'bar' ? 6 : 0,
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: { duration: 400 },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: { label: c => 'Rs. ' + c.parsed.y.toLocaleString('en-IN') + ' / quintal' },
+          padding: 10, cornerRadius: 8,
+        }
+      },
+      scales: {
+        y: {
+          ticks: { callback: v => 'Rs.' + v.toLocaleString('en-IN'), font:{size:11} },
+          grid: { color: '#f0f0f0' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+function filterChart(days, btn) {
+  currentDays = days;
+  document.querySelectorAll('.chart-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildChart(days, currentType);
+}
+
+function setChartType(type, btn) {
+  currentType = type;
+  document.querySelectorAll('.chart-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildChart(currentDays, type);
+}
+
+buildChart(7, 'line');
+</script>
+{% endif %}
+{% endblock %}

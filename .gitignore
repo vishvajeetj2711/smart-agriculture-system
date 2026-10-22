@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env
+.venv/
+
+# Flask
+instance/
+.webassets-cache
+
+# Model files (large — add manually if needed)
+models/*.h5
+models/*.pkl
+
+# Uploaded images (user data)
+static/images/uploads/*
+!static/images/uploads/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+
+# Secrets (never commit)
+config.json

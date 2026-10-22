@@ -1,0 +1,37 @@
+{
+  "alerts": [
+    {
+      "id": 1,
+      "timestamp": "2026-09-26T09:02:28.328503",
+      "date": "26 Sep 2026 09:02",
+      "to_email": "farmer.gujarat@example.com",
+      "crop": "Cotton",
+      "status": "HIGH",
+      "water_L": 64500,
+      "subject": "🌾 [Smart Agri Alert] Cotton Irrigation Advisory — HIGH WATER STRESS",
+      "demo_mode": true
+    },
+    {
+      "id": 2,
+      "timestamp": "2026-09-26T09:05:06.757694",
+      "date": "26 Sep 2026 09:05",
+      "to_email": "farmer@gujaratagri.org",
+      "crop": "Cotton",
+      "status": "HIGH",
+      "water_L": 60750,
+      "subject": "🌾 [Smart Agri Alert] Cotton Irrigation Advisory — HIGH WATER STRESS",
+      "demo_mode": true
+    },
+    {
+      "id": 3,
+      "timestamp": "2026-09-26T09:09:08.620923",
+      "date": "26 Sep 2026 09:09",
+      "to_email": "jadavvishvajeet4@gmail.com",
+      "crop": "Cotton",
+      "status": "LOW",
+      "water_L": 0,
+      "subject": "🌾 [Smart Agri Alert] Cotton Irrigation Advisory — LOW WATER STRESS",
+      "demo_mode": true
+    }
+  ]
+}
